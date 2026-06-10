@@ -1,0 +1,990 @@
+{
+  "household": {
+    "id": "household_default",
+    "name": "Default Household",
+    "cuisinePreference": "north_indian"
+  },
+
+  "users": [
+    { "id": "user_cook", "name": "Cook Bhaiya", "email": "cook@example.com", "role": "cook", "householdId": "household_default" },
+    { "id": "user_hm1", "name": "Housemate 1", "email": "hm1@example.com", "role": "housemate", "householdId": "household_default" },
+    { "id": "user_hm2", "name": "Housemate 2", "email": "hm2@example.com", "role": "housemate", "householdId": "household_default" },
+    { "id": "user_hm3", "name": "Housemate 3", "email": "hm3@example.com", "role": "housemate", "householdId": "household_default" }
+  ],
+
+  "mealTemplates": [
+    {
+      "id": "template_breakfast",
+      "householdId": "household_default",
+      "name": "Breakfast",
+      "mealSubType": "breakfast",
+      "isActive": true
+    },
+    {
+      "id": "template_lunch",
+      "householdId": "household_default",
+      "name": "Lunch",
+      "mealSubType": "lunch",
+      "isActive": true
+    },
+    {
+      "id": "template_dinner",
+      "householdId": "household_default",
+      "name": "Dinner",
+      "mealSubType": "dinner",
+      "isActive": true
+    }
+  ],
+
+  "mealComponents": [
+    { "id": "comp_carb", "mealTemplateId": "template_lunch", "name": "Roti / Carb", "isRequired": true, "displayOrder": 1, "minSelections": 1, "maxSelections": 1 },
+    { "id": "comp_sabji", "mealTemplateId": "template_lunch", "name": "Sabji / Protein", "isRequired": true, "displayOrder": 2, "minSelections": 1, "maxSelections": 1 },
+    { "id": "comp_dal", "mealTemplateId": "template_lunch", "name": "Dal / Pulses", "isRequired": false, "displayOrder": 3, "minSelections": 0, "maxSelections": 1 },
+    { "id": "comp_salad", "mealTemplateId": "template_lunch", "name": "Curd / Salad / Sides", "isRequired": true, "displayOrder": 4, "minSelections": 1, "maxSelections": 2 },
+
+    { "id": "comp_carb_d", "mealTemplateId": "template_dinner", "name": "Roti / Carb", "isRequired": true, "displayOrder": 1, "minSelections": 1, "maxSelections": 1 },
+    { "id": "comp_sabji_d", "mealTemplateId": "template_dinner", "name": "Sabji / Protein", "isRequired": true, "displayOrder": 2, "minSelections": 1, "maxSelections": 1 },
+    { "id": "comp_dal_d", "mealTemplateId": "template_dinner", "name": "Dal / Pulses", "isRequired": false, "displayOrder": 3, "minSelections": 0, "maxSelections": 1 },
+    { "id": "comp_salad_d", "mealTemplateId": "template_dinner", "name": "Curd / Salad / Sides", "isRequired": true, "displayOrder": 4, "minSelections": 1, "maxSelections": 2 },
+
+    { "id": "comp_breakfast", "mealTemplateId": "template_breakfast", "name": "Breakfast Dish", "isRequired": true, "displayOrder": 1, "minSelections": 1, "maxSelections": 1 },
+    { "id": "comp_bf_side", "mealTemplateId": "template_breakfast", "name": "Chutney / Sauce", "isRequired": false, "displayOrder": 2, "minSelections": 0, "maxSelections": 1 }
+  ],
+
+  "ingredients": {
+    "vegetables": [
+      { "id": "ing_onion", "name": "Onion", "defaultUnit": "pieces", "category": "vegetables" },
+      { "id": "ing_tomato", "name": "Tomato", "defaultUnit": "pieces", "category": "vegetables" },
+      { "id": "ing_potato", "name": "Potato", "defaultUnit": "pieces", "category": "vegetables" },
+      { "id": "ing_cauliflower", "name": "Cauliflower (Gobhi)", "defaultUnit": "pieces", "category": "vegetables" },
+      { "id": "ing_okra", "name": "Okra (Bhindi)", "defaultUnit": "g", "category": "vegetables" },
+      { "id": "ing_eggplant", "name": "Eggplant (Baingan)", "defaultUnit": "pieces", "category": "vegetables" },
+      { "id": "ing_spinach", "name": "Spinach (Palak)", "defaultUnit": "g", "category": "vegetables" },
+      { "id": "ing_carrot", "name": "Carrot", "defaultUnit": "pieces", "category": "vegetables" },
+      { "id": "ing_cucumber", "name": "Cucumber", "defaultUnit": "pieces", "category": "vegetables" },
+      { "id": "ing_beetroot", "name": "Beetroot", "defaultUnit": "pieces", "category": "vegetables" },
+      { "id": "ing_cabbage", "name": "Cabbage", "defaultUnit": "pieces", "category": "vegetables" },
+      { "id": "ing_capsicum", "name": "Capsicum", "defaultUnit": "pieces", "category": "vegetables" },
+      { "id": "ing_peas", "name": "Green Peas (Matar)", "defaultUnit": "g", "category": "vegetables" },
+      { "id": "ing_beans", "name": "French Beans", "defaultUnit": "g", "category": "vegetables" },
+      { "id": "ing_mushroom", "name": "Mushroom", "defaultUnit": "g", "category": "vegetables" },
+      { "id": "ing_ginger", "name": "Ginger", "defaultUnit": "g", "category": "vegetables" },
+      { "id": "ing_garlic", "name": "Garlic", "defaultUnit": "cloves", "category": "vegetables" },
+      { "id": "ing_green_chili", "name": "Green Chili", "defaultUnit": "pieces", "category": "vegetables" },
+      { "id": "ing_coriander", "name": "Fresh Coriander", "defaultUnit": "g", "category": "vegetables" },
+      { "id": "ing_mint", "name": "Mint Leaves", "defaultUnit": "g", "category": "vegetables" },
+      { "id": "ing_lemon", "name": "Lemon", "defaultUnit": "pieces", "category": "vegetables" },
+      { "id": "ing_lauki", "name": "Bottle Gourd (Lauki)", "defaultUnit": "pieces", "category": "vegetables" },
+      { "id": "ing_tinda", "name": "Tinda", "defaultUnit": "g", "category": "vegetables" },
+      { "id": "ing_karela", "name": "Bitter Gourd (Karela)", "defaultUnit": "pieces", "category": "vegetables" },
+      { "id": "ing_methi", "name": "Fenugreek Leaves (Methi)", "defaultUnit": "g", "category": "vegetables" },
+      { "id": "ing_drumstick", "name": "Drumstick", "defaultUnit": "pieces", "category": "vegetables" },
+      { "id": "ing_pumpkin", "name": "Pumpkin", "defaultUnit": "g", "category": "vegetables" },
+      { "id": "ing_raw_banana", "name": "Raw Banana", "defaultUnit": "pieces", "category": "vegetables" }
+    ],
+    "dairy": [
+      { "id": "ing_paneer", "name": "Paneer", "defaultUnit": "g", "category": "dairy" },
+      { "id": "ing_curd", "name": "Curd (Yogurt)", "defaultUnit": "g", "category": "dairy" },
+      { "id": "ing_milk", "name": "Milk", "defaultUnit": "ml", "category": "dairy" },
+      { "id": "ing_butter", "name": "Butter", "defaultUnit": "g", "category": "dairy" },
+      { "id": "ing_ghee", "name": "Ghee", "defaultUnit": "g", "category": "dairy" },
+      { "id": "ing_cream", "name": "Fresh Cream", "defaultUnit": "ml", "category": "dairy" }
+    ],
+    "grains_flours": [
+      { "id": "ing_wheat_flour", "name": "Wheat Flour (Atta)", "defaultUnit": "g", "category": "grains" },
+      { "id": "ing_rice", "name": "Basmati Rice", "defaultUnit": "g", "category": "grains" },
+      { "id": "ing_bajra_flour", "name": "Bajra Flour", "defaultUnit": "g", "category": "grains" },
+      { "id": "ing_jowar_flour", "name": "Jowar Flour", "defaultUnit": "g", "category": "grains" },
+      { "id": "ing_ragi_flour", "name": "Ragi Flour", "defaultUnit": "g", "category": "grains" },
+      { "id": "ing_makki_flour", "name": "Makki Flour", "defaultUnit": "g", "category": "grains" },
+      { "id": "ing_besan", "name": "Besan (Gram Flour)", "defaultUnit": "g", "category": "grains" },
+      { "id": "ing_sooji", "name": "Sooji (Semolina)", "defaultUnit": "g", "category": "grains" },
+      { "id": "ing_maida", "name": "Maida (Refined Flour)", "defaultUnit": "g", "category": "grains" },
+      { "id": "ing_oats", "name": "Oats", "defaultUnit": "g", "category": "grains" },
+      { "id": "ing_dalia", "name": "Dalia (Broken Wheat)", "defaultUnit": "g", "category": "grains" },
+      { "id": "ing_poha", "name": "Poha (Flattened Rice)", "defaultUnit": "g", "category": "grains" },
+      { "id": "ing_sabudana", "name": "Sabudana", "defaultUnit": "g", "category": "grains" },
+      { "id": "ing_bread", "name": "Bread (Sliced)", "defaultUnit": "slices", "category": "grains" },
+      { "id": "ing_foxtail_flour", "name": "Foxtail Millet Flour", "defaultUnit": "g", "category": "grains" },
+      { "id": "ing_kodo_flour", "name": "Kodo Millet Flour", "defaultUnit": "g", "category": "grains" }
+    ],
+    "lentils": [
+      { "id": "ing_toor_dal", "name": "Toor Dal (Arhar)", "defaultUnit": "g", "category": "lentils" },
+      { "id": "ing_moong_dal", "name": "Moong Dal", "defaultUnit": "g", "category": "lentils" },
+      { "id": "ing_masoor_dal", "name": "Masoor Dal", "defaultUnit": "g", "category": "lentils" },
+      { "id": "ing_chana_dal", "name": "Chana Dal", "defaultUnit": "g", "category": "lentils" },
+      { "id": "ing_urad_dal", "name": "Urad Dal", "defaultUnit": "g", "category": "lentils" },
+      { "id": "ing_rajma", "name": "Rajma (Kidney Beans)", "defaultUnit": "g", "category": "lentils" },
+      { "id": "ing_chana", "name": "Kabuli Chana", "defaultUnit": "g", "category": "lentils" },
+      { "id": "ing_black_chana", "name": "Kala Chana", "defaultUnit": "g", "category": "lentils" },
+      { "id": "ing_moong_whole", "name": "Whole Moong", "defaultUnit": "g", "category": "lentils" }
+    ],
+    "spices_whole": [
+      { "id": "ing_cumin_seeds", "name": "Cumin Seeds (Jeera)", "defaultUnit": "g", "category": "spices" },
+      { "id": "ing_mustard_seeds", "name": "Mustard Seeds (Rai)", "defaultUnit": "g", "category": "spices" },
+      { "id": "ing_hing", "name": "Asafoetida (Hing)", "defaultUnit": "g", "category": "spices" },
+      { "id": "ing_bay_leaf", "name": "Bay Leaf (Tej Patta)", "defaultUnit": "pieces", "category": "spices" },
+      { "id": "ing_cinnamon", "name": "Cinnamon Stick", "defaultUnit": "pieces", "category": "spices" },
+      { "id": "ing_cardamom", "name": "Green Cardamom", "defaultUnit": "pieces", "category": "spices" },
+      { "id": "ing_cloves", "name": "Cloves", "defaultUnit": "pieces", "category": "spices" },
+      { "id": "ing_dry_red_chili", "name": "Dry Red Chili", "defaultUnit": "pieces", "category": "spices" },
+      { "id": "ing_fenugreek_seeds", "name": "Fenugreek Seeds", "defaultUnit": "g", "category": "spices" },
+      { "id": "ing_curry_leaves", "name": "Curry Leaves", "defaultUnit": "sprigs", "category": "spices" }
+    ],
+    "spices_powder": [
+      { "id": "ing_turmeric", "name": "Turmeric Powder (Haldi)", "defaultUnit": "g", "category": "spices" },
+      { "id": "ing_red_chili_powder", "name": "Red Chili Powder", "defaultUnit": "g", "category": "spices" },
+      { "id": "ing_coriander_powder", "name": "Coriander Powder (Dhania)", "defaultUnit": "g", "category": "spices" },
+      { "id": "ing_garam_masala", "name": "Garam Masala", "defaultUnit": "g", "category": "spices" },
+      { "id": "ing_amchur", "name": "Amchur (Dry Mango Powder)", "defaultUnit": "g", "category": "spices" },
+      { "id": "ing_chaat_masala", "name": "Chaat Masala", "defaultUnit": "g", "category": "spices" },
+      { "id": "ing_cumin_powder", "name": "Cumin Powder", "defaultUnit": "g", "category": "spices" },
+      { "id": "ing_kasuri_methi", "name": "Kasuri Methi (Dry)", "defaultUnit": "g", "category": "spices" },
+      { "id": "ing_sambar_powder", "name": "Sambar Powder", "defaultUnit": "g", "category": "spices" }
+    ],
+    "proteins_nonveg": [
+      { "id": "ing_chicken", "name": "Chicken", "defaultUnit": "g", "category": "non_veg" },
+      { "id": "ing_eggs", "name": "Eggs", "defaultUnit": "pieces", "category": "non_veg" },
+      { "id": "ing_mutton", "name": "Mutton", "defaultUnit": "g", "category": "non_veg" },
+      { "id": "ing_fish", "name": "Fish Fillet", "defaultUnit": "g", "category": "non_veg" },
+      { "id": "ing_prawns", "name": "Prawns", "defaultUnit": "g", "category": "non_veg" }
+    ],
+    "other": [
+      { "id": "ing_oil", "name": "Cooking Oil", "defaultUnit": "ml", "category": "other" },
+      { "id": "ing_salt", "name": "Salt", "defaultUnit": "g", "category": "other" },
+      { "id": "ing_sugar", "name": "Sugar", "defaultUnit": "g", "category": "other" },
+      { "id": "ing_peanuts", "name": "Peanuts", "defaultUnit": "g", "category": "other" },
+      { "id": "ing_coconut", "name": "Coconut (Grated)", "defaultUnit": "g", "category": "other" },
+      { "id": "ing_tamarind", "name": "Tamarind", "defaultUnit": "g", "category": "other" },
+      { "id": "ing_jaggery", "name": "Jaggery (Gud)", "defaultUnit": "g", "category": "other" },
+      { "id": "ing_papad", "name": "Papad", "defaultUnit": "pieces", "category": "other" },
+      { "id": "ing_pickle", "name": "Pickle (Achar)", "defaultUnit": "g", "category": "other" },
+      { "id": "ing_honey", "name": "Honey", "defaultUnit": "ml", "category": "other" },
+      { "id": "ing_peanut_butter", "name": "Peanut Butter", "defaultUnit": "g", "category": "other" },
+      { "id": "ing_tomato_sauce", "name": "Tomato Ketchup", "defaultUnit": "g", "category": "other" }
+    ]
+  },
+
+  "dishes": [
+    {
+      "id": "dish_bajra_roti",
+      "name": "Bajra Roti",
+      "componentId": "comp_carb",
+      "mealSubType": "any",
+      "isVegetarian": true,
+      "prepTimeMin": 20,
+      "recipeSteps": ["Mix bajra flour with warm water and knead into soft dough", "Divide into balls, flatten by hand on a rolling board", "Cook on hot tawa, flipping until golden spots appear", "Apply ghee and serve hot"],
+      "videoReferences": [],
+      "ingredients": [
+        { "ingredientId": "ing_bajra_flour", "quantity": 80, "unit": "g" },
+        { "ingredientId": "ing_ghee", "quantity": 5, "unit": "g" },
+        { "ingredientId": "ing_salt", "quantity": 1, "unit": "g" }
+      ]
+    },
+    {
+      "id": "dish_jowar_roti",
+      "name": "Jowar Roti",
+      "componentId": "comp_carb",
+      "mealSubType": "any",
+      "isVegetarian": true,
+      "prepTimeMin": 20,
+      "recipeSteps": ["Mix jowar flour with warm water, knead soft dough", "Pat into flat rounds using hands or rolling pin", "Cook on tawa both sides, puff on direct flame", "Serve with ghee"],
+      "videoReferences": [],
+      "ingredients": [
+        { "ingredientId": "ing_jowar_flour", "quantity": 80, "unit": "g" },
+        { "ingredientId": "ing_ghee", "quantity": 5, "unit": "g" },
+        { "ingredientId": "ing_salt", "quantity": 1, "unit": "g" }
+      ]
+    },
+    {
+      "id": "dish_ragi_roti",
+      "name": "Ragi Roti",
+      "componentId": "comp_carb",
+      "mealSubType": "any",
+      "isVegetarian": true,
+      "prepTimeMin": 20,
+      "recipeSteps": ["Mix ragi flour with warm water and salt, knead", "Roll into thin rotis on dusted surface", "Cook on hot tawa, flip, cook both sides", "Apply ghee"],
+      "videoReferences": [],
+      "ingredients": [
+        { "ingredientId": "ing_ragi_flour", "quantity": 80, "unit": "g" },
+        { "ingredientId": "ing_ghee", "quantity": 5, "unit": "g" },
+        { "ingredientId": "ing_salt", "quantity": 1, "unit": "g" }
+      ]
+    },
+    {
+      "id": "dish_wheat_roti",
+      "name": "Wheat Roti (Phulka)",
+      "componentId": "comp_carb",
+      "mealSubType": "any",
+      "isVegetarian": true,
+      "prepTimeMin": 15,
+      "recipeSteps": ["Knead wheat flour with water into soft dough, rest 10 min", "Divide into balls, roll into thin circles", "Cook on tawa, flip, puff on open flame", "Apply ghee, serve"],
+      "videoReferences": [],
+      "ingredients": [
+        { "ingredientId": "ing_wheat_flour", "quantity": 70, "unit": "g" },
+        { "ingredientId": "ing_ghee", "quantity": 5, "unit": "g" },
+        { "ingredientId": "ing_salt", "quantity": 1, "unit": "g" }
+      ]
+    },
+    {
+      "id": "dish_jeera_rice",
+      "name": "Jeera Rice",
+      "componentId": "comp_carb",
+      "mealSubType": "any",
+      "isVegetarian": true,
+      "prepTimeMin": 25,
+      "recipeSteps": ["Cook basmati rice until 80% done, drain", "Heat ghee, add cumin seeds till they crackle", "Add cooked rice, salt, mix gently", "Steam covered 5 min, fluff with fork"],
+      "videoReferences": [],
+      "ingredients": [
+        { "ingredientId": "ing_rice", "quantity": 100, "unit": "g" },
+        { "ingredientId": "ing_cumin_seeds", "quantity": 5, "unit": "g" },
+        { "ingredientId": "ing_ghee", "quantity": 10, "unit": "g" },
+        { "ingredientId": "ing_salt", "quantity": 2, "unit": "g" }
+      ]
+    },
+    {
+      "id": "dish_steamed_rice",
+      "name": "Steamed Basmati Rice",
+      "componentId": "comp_carb",
+      "mealSubType": "any",
+      "isVegetarian": true,
+      "prepTimeMin": 25,
+      "recipeSteps": ["Wash rice 2-3 times, soak 20 min", "Boil water (2x rice volume), add rice and salt", "Cook until water absorbed, fluff with fork", "Rest covered 5 min"],
+      "videoReferences": [],
+      "ingredients": [
+        { "ingredientId": "ing_rice", "quantity": 100, "unit": "g" },
+        { "ingredientId": "ing_salt", "quantity": 2, "unit": "g" }
+      ]
+    },
+    {
+      "id": "dish_peas_pulao",
+      "name": "Peas Pulao",
+      "componentId": "comp_carb",
+      "mealSubType": "any",
+      "isVegetarian": true,
+      "prepTimeMin": 30,
+      "recipeSteps": ["Sauté cumin, bay leaf, cinnamon in ghee", "Add soaked rice, peas, salt, water (2x)", "Cook covered on low flame until done", "Fluff and garnish with coriander"],
+      "videoReferences": [],
+      "ingredients": [
+        { "ingredientId": "ing_rice", "quantity": 100, "unit": "g" },
+        { "ingredientId": "ing_peas", "quantity": 50, "unit": "g" },
+        { "ingredientId": "ing_ghee", "quantity": 15, "unit": "g" },
+        { "ingredientId": "ing_cumin_seeds", "quantity": 5, "unit": "g" },
+        { "ingredientId": "ing_bay_leaf", "quantity": 1, "unit": "pieces" },
+        { "ingredientId": "ing_cinnamon", "quantity": 1, "unit": "pieces" },
+        { "ingredientId": "ing_salt", "quantity": 3, "unit": "g" }
+      ]
+    },
+    {
+      "id": "dish_paneer_bhurji",
+      "name": "Paneer Bhurji",
+      "componentId": "comp_sabji",
+      "mealSubType": "any",
+      "isVegetarian": true,
+      "prepTimeMin": 20,
+      "recipeSteps": ["Sauté cumin, onion, ginger, green chili in oil", "Add tomatoes, turmeric, chili powder, cook till soft", "Crumble paneer, add and stir fry 5 min", "Finish with garam masala and coriander"],
+      "videoReferences": [],
+      "ingredients": [
+        { "ingredientId": "ing_paneer", "quantity": 200, "unit": "g" },
+        { "ingredientId": "ing_onion", "quantity": 1, "unit": "pieces" },
+        { "ingredientId": "ing_tomato", "quantity": 1, "unit": "pieces" },
+        { "ingredientId": "ing_ginger", "quantity": 5, "unit": "g" },
+        { "ingredientId": "ing_green_chili", "quantity": 2, "unit": "pieces" },
+        { "ingredientId": "ing_cumin_seeds", "quantity": 3, "unit": "g" },
+        { "ingredientId": "ing_turmeric", "quantity": 2, "unit": "g" },
+        { "ingredientId": "ing_red_chili_powder", "quantity": 2, "unit": "g" },
+        { "ingredientId": "ing_garam_masala", "quantity": 2, "unit": "g" },
+        { "ingredientId": "ing_oil", "quantity": 15, "unit": "ml" },
+        { "ingredientId": "ing_coriander", "quantity": 5, "unit": "g" },
+        { "ingredientId": "ing_salt", "quantity": 3, "unit": "g" }
+      ]
+    },
+    {
+      "id": "dish_palak_paneer",
+      "name": "Palak Paneer",
+      "componentId": "comp_sabji",
+      "mealSubType": "any",
+      "isVegetarian": true,
+      "prepTimeMin": 30,
+      "recipeSteps": ["Blanch spinach, blend into smooth puree", "Sauté cumin, onion, ginger-garlic in butter", "Add spinach puree, salt, garam masala, simmer", "Add paneer cubes, cook 5 min, finish with cream"],
+      "videoReferences": [],
+      "ingredients": [
+        { "ingredientId": "ing_paneer", "quantity": 200, "unit": "g" },
+        { "ingredientId": "ing_spinach", "quantity": 250, "unit": "g" },
+        { "ingredientId": "ing_onion", "quantity": 1, "unit": "pieces" },
+        { "ingredientId": "ing_ginger", "quantity": 5, "unit": "g" },
+        { "ingredientId": "ing_garlic", "quantity": 4, "unit": "cloves" },
+        { "ingredientId": "ing_green_chili", "quantity": 2, "unit": "pieces" },
+        { "ingredientId": "ing_butter", "quantity": 15, "unit": "g" },
+        { "ingredientId": "ing_cream", "quantity": 30, "unit": "ml" },
+        { "ingredientId": "ing_cumin_seeds", "quantity": 3, "unit": "g" },
+        { "ingredientId": "ing_garam_masala", "quantity": 2, "unit": "g" },
+        { "ingredientId": "ing_salt", "quantity": 3, "unit": "g" }
+      ]
+    },
+    {
+      "id": "dish_pbm",
+      "name": "Paneer Butter Masala",
+      "componentId": "comp_sabji",
+      "mealSubType": "any",
+      "isVegetarian": true,
+      "prepTimeMin": 35,
+      "recipeSteps": ["Sauté onion, ginger, garlic, tomato — blend into smooth gravy", "Melt butter, add gravy, red chili powder, kasuri methi, cream", "Add paneer cubes, simmer 10 min", "Finish with cream swirl and coriander"],
+      "videoReferences": [],
+      "ingredients": [
+        { "ingredientId": "ing_paneer", "quantity": 200, "unit": "g" },
+        { "ingredientId": "ing_onion", "quantity": 2, "unit": "pieces" },
+        { "ingredientId": "ing_tomato", "quantity": 3, "unit": "pieces" },
+        { "ingredientId": "ing_ginger", "quantity": 10, "unit": "g" },
+        { "ingredientId": "ing_garlic", "quantity": 5, "unit": "cloves" },
+        { "ingredientId": "ing_butter", "quantity": 30, "unit": "g" },
+        { "ingredientId": "ing_cream", "quantity": 40, "unit": "ml" },
+        { "ingredientId": "ing_red_chili_powder", "quantity": 3, "unit": "g" },
+        { "ingredientId": "ing_kasuri_methi", "quantity": 2, "unit": "g" },
+        { "ingredientId": "ing_garam_masala", "quantity": 2, "unit": "g" },
+        { "ingredientId": "ing_salt", "quantity": 3, "unit": "g" },
+        { "ingredientId": "ing_coriander", "quantity": 5, "unit": "g" }
+      ]
+    },
+    {
+      "id": "dish_kadai_paneer",
+      "name": "Kadai Paneer",
+      "componentId": "comp_sabji",
+      "mealSubType": "any",
+      "isVegetarian": true,
+      "prepTimeMin": 25,
+      "recipeSteps": ["Dry roast coriander seeds and red chili, grind coarse (kadai masala)", "Sauté onion, capsicum, tomato in oil till crunchy", "Add kadai masala, ginger, paneer cubes", "Toss well, finish with cream and coriander"],
+      "videoReferences": [],
+      "ingredients": [
+        { "ingredientId": "ing_paneer", "quantity": 200, "unit": "g" },
+        { "ingredientId": "ing_onion", "quantity": 1, "unit": "pieces" },
+        { "ingredientId": "ing_capsicum", "quantity": 1, "unit": "pieces" },
+        { "ingredientId": "ing_tomato", "quantity": 2, "unit": "pieces" },
+        { "ingredientId": "ing_ginger", "quantity": 10, "unit": "g" },
+        { "ingredientId": "ing_coriander_powder", "quantity": 5, "unit": "g" },
+        { "ingredientId": "ing_red_chili_powder", "quantity": 3, "unit": "g" },
+        { "ingredientId": "ing_cream", "quantity": 20, "unit": "ml" },
+        { "ingredientId": "ing_oil", "quantity": 15, "unit": "ml" },
+        { "ingredientId": "ing_coriander", "quantity": 5, "unit": "g" },
+        { "ingredientId": "ing_salt", "quantity": 3, "unit": "g" }
+      ]
+    },
+    {
+      "id": "dish_baingan_bharta",
+      "name": "Baingan Bharta",
+      "componentId": "comp_sabji",
+      "mealSubType": "any",
+      "isVegetarian": true,
+      "prepTimeMin": 30,
+      "recipeSteps": ["Roast whole eggplant on open flame until charred, peel skin", "Mash the flesh", "Sauté cumin, onion, ginger, green chili, tomato in oil", "Add mashed eggplant, turmeric, salt, cook 10 min", "Finish with coriander"],
+      "videoReferences": [],
+      "ingredients": [
+        { "ingredientId": "ing_eggplant", "quantity": 2, "unit": "pieces" },
+        { "ingredientId": "ing_onion", "quantity": 1, "unit": "pieces" },
+        { "ingredientId": "ing_tomato", "quantity": 1, "unit": "pieces" },
+        { "ingredientId": "ing_ginger", "quantity": 5, "unit": "g" },
+        { "ingredientId": "ing_green_chili", "quantity": 2, "unit": "pieces" },
+        { "ingredientId": "ing_cumin_seeds", "quantity": 3, "unit": "g" },
+        { "ingredientId": "ing_turmeric", "quantity": 2, "unit": "g" },
+        { "ingredientId": "ing_oil", "quantity": 15, "unit": "ml" },
+        { "ingredientId": "ing_coriander", "quantity": 5, "unit": "g" },
+        { "ingredientId": "ing_salt", "quantity": 3, "unit": "g" }
+      ]
+    },
+    {
+      "id": "dish_chana_masala",
+      "name": "Chana Masala",
+      "componentId": "comp_sabji",
+      "mealSubType": "any",
+      "isVegetarian": true,
+      "prepTimeMin": 40,
+      "recipeSteps": ["Soak chana overnight, boil with salt till soft", "Sauté cumin, onion, ginger-garlic till golden", "Add tomato puree, chana masala spices, cook till oil separates", "Add boiled chana, simmer 15 min, garnish with onion and lemon"],
+      "videoReferences": [],
+      "ingredients": [
+        { "ingredientId": "ing_chana", "quantity": 150, "unit": "g" },
+        { "ingredientId": "ing_onion", "quantity": 2, "unit": "pieces" },
+        { "ingredientId": "ing_tomato", "quantity": 2, "unit": "pieces" },
+        { "ingredientId": "ing_ginger", "quantity": 10, "unit": "g" },
+        { "ingredientId": "ing_garlic", "quantity": 5, "unit": "cloves" },
+        { "ingredientId": "ing_cumin_seeds", "quantity": 5, "unit": "g" },
+        { "ingredientId": "ing_coriander_powder", "quantity": 5, "unit": "g" },
+        { "ingredientId": "ing_red_chili_powder", "quantity": 3, "unit": "g" },
+        { "ingredientId": "ing_garam_masala", "quantity": 2, "unit": "g" },
+        { "ingredientId": "ing_amchur", "quantity": 2, "unit": "g" },
+        { "ingredientId": "ing_oil", "quantity": 20, "unit": "ml" },
+        { "ingredientId": "ing_lemon", "quantity": 0.5, "unit": "pieces" },
+        { "ingredientId": "ing_salt", "quantity": 3, "unit": "g" }
+      ]
+    },
+    {
+      "id": "dish_rajma",
+      "name": "Rajma Masala",
+      "componentId": "comp_sabji",
+      "mealSubType": "any",
+      "isVegetarian": true,
+      "prepTimeMin": 45,
+      "recipeSteps": ["Soak rajma overnight, pressure cook with salt", "Sauté cumin, onion, ginger-garlic till brown", "Add tomato puree, turmeric, chili, coriander powders", "Add boiled rajma, simmer 20 min, finish with garam masala"],
+      "videoReferences": [],
+      "ingredients": [
+        { "ingredientId": "ing_rajma", "quantity": 150, "unit": "g" },
+        { "ingredientId": "ing_onion", "quantity": 2, "unit": "pieces" },
+        { "ingredientId": "ing_tomato", "quantity": 2, "unit": "pieces" },
+        { "ingredientId": "ing_ginger", "quantity": 10, "unit": "g" },
+        { "ingredientId": "ing_garlic", "quantity": 5, "unit": "cloves" },
+        { "ingredientId": "ing_cumin_seeds", "quantity": 5, "unit": "g" },
+        { "ingredientId": "ing_turmeric", "quantity": 2, "unit": "g" },
+        { "ingredientId": "ing_red_chili_powder", "quantity": 3, "unit": "g" },
+        { "ingredientId": "ing_coriander_powder", "quantity": 5, "unit": "g" },
+        { "ingredientId": "ing_garam_masala", "quantity": 2, "unit": "g" },
+        { "ingredientId": "ing_oil", "quantity": 20, "unit": "ml" },
+        { "ingredientId": "ing_salt", "quantity": 3, "unit": "g" }
+      ]
+    },
+    {
+      "id": "dish_chicken_curry",
+      "name": "Chicken Curry",
+      "componentId": "comp_sabji",
+      "mealSubType": "any",
+      "isVegetarian": false,
+      "prepTimeMin": 40,
+      "recipeSteps": ["Marinate chicken with turmeric, chili, salt 15 min", "Sauté onion, ginger-garlic till brown", "Add tomato, spices, cook till oil separates", "Add chicken, cook 20 min covered, finish with coriander"],
+      "videoReferences": [],
+      "ingredients": [
+        { "ingredientId": "ing_chicken", "quantity": 300, "unit": "g" },
+        { "ingredientId": "ing_onion", "quantity": 2, "unit": "pieces" },
+        { "ingredientId": "ing_tomato", "quantity": 2, "unit": "pieces" },
+        { "ingredientId": "ing_ginger", "quantity": 10, "unit": "g" },
+        { "ingredientId": "ing_garlic", "quantity": 5, "unit": "cloves" },
+        { "ingredientId": "ing_turmeric", "quantity": 3, "unit": "g" },
+        { "ingredientId": "ing_red_chili_powder", "quantity": 5, "unit": "g" },
+        { "ingredientId": "ing_coriander_powder", "quantity": 5, "unit": "g" },
+        { "ingredientId": "ing_garam_masala", "quantity": 3, "unit": "g" },
+        { "ingredientId": "ing_oil", "quantity": 25, "unit": "ml" },
+        { "ingredientId": "ing_coriander", "quantity": 5, "unit": "g" },
+        { "ingredientId": "ing_salt", "quantity": 4, "unit": "g" }
+      ]
+    },
+    {
+      "id": "dish_butter_chicken",
+      "name": "Butter Chicken",
+      "componentId": "comp_sabji",
+      "mealSubType": "any",
+      "isVegetarian": false,
+      "prepTimeMin": 45,
+      "recipeSteps": ["Marinate chicken in yogurt, chili, turmeric, garam masala", "Grill/tandoor until charred", "Simmer tomato-butter-cream gravy with fenugreek", "Add tikka pieces, simmer 10 min, finish with cream"],
+      "videoReferences": [],
+      "ingredients": [
+        { "ingredientId": "ing_chicken", "quantity": 300, "unit": "g" },
+        { "ingredientId": "ing_curd", "quantity": 50, "unit": "g" },
+        { "ingredientId": "ing_tomato", "quantity": 3, "unit": "pieces" },
+        { "ingredientId": "ing_butter", "quantity": 40, "unit": "g" },
+        { "ingredientId": "ing_cream", "quantity": 50, "unit": "ml" },
+        { "ingredientId": "ing_ginger", "quantity": 10, "unit": "g" },
+        { "ingredientId": "ing_garlic", "quantity": 5, "unit": "cloves" },
+        { "ingredientId": "ing_red_chili_powder", "quantity": 5, "unit": "g" },
+        { "ingredientId": "ing_turmeric", "quantity": 2, "unit": "g" },
+        { "ingredientId": "ing_garam_masala", "quantity": 3, "unit": "g" },
+        { "ingredientId": "ing_kasuri_methi", "quantity": 2, "unit": "g" },
+        { "ingredientId": "ing_salt", "quantity": 4, "unit": "g" }
+      ]
+    },
+    {
+      "id": "dish_mutton_curry",
+      "name": "Mutton Curry",
+      "componentId": "comp_sabji",
+      "mealSubType": "any",
+      "isVegetarian": false,
+      "prepTimeMin": 60,
+      "recipeSteps": ["Marinate mutton with curd, turmeric, chili powder", "Sauté whole spices, onion, ginger-garlic till dark brown", "Add tomato, powdered spices, cook till oil separates", "Add mutton, cook covered on low flame 45 min till tender"],
+      "videoReferences": [],
+      "ingredients": [
+        { "ingredientId": "ing_mutton", "quantity": 300, "unit": "g" },
+        { "ingredientId": "ing_curd", "quantity": 50, "unit": "g" },
+        { "ingredientId": "ing_onion", "quantity": 3, "unit": "pieces" },
+        { "ingredientId": "ing_tomato", "quantity": 2, "unit": "pieces" },
+        { "ingredientId": "ing_ginger", "quantity": 15, "unit": "g" },
+        { "ingredientId": "ing_garlic", "quantity": 6, "unit": "cloves" },
+        { "ingredientId": "ing_cinnamon", "quantity": 1, "unit": "pieces" },
+        { "ingredientId": "ing_cardamom", "quantity": 3, "unit": "pieces" },
+        { "ingredientId": "ing_cloves", "quantity": 3, "unit": "pieces" },
+        { "ingredientId": "ing_turmeric", "quantity": 3, "unit": "g" },
+        { "ingredientId": "ing_red_chili_powder", "quantity": 5, "unit": "g" },
+        { "ingredientId": "ing_coriander_powder", "quantity": 5, "unit": "g" },
+        { "ingredientId": "ing_garam_masala", "quantity": 3, "unit": "g" },
+        { "ingredientId": "ing_oil", "quantity": 30, "unit": "ml" },
+        { "ingredientId": "ing_coriander", "quantity": 5, "unit": "g" },
+        { "ingredientId": "ing_salt", "quantity": 4, "unit": "g" }
+      ]
+    },
+    {
+      "id": "dish_dal_tadka",
+      "name": "Dal Tadka",
+      "componentId": "comp_dal",
+      "mealSubType": "any",
+      "isVegetarian": true,
+      "prepTimeMin": 30,
+      "recipeSteps": ["Boil toor dal with turmeric, salt till soft, mash lightly", "Heat ghee, add cumin, mustard, dry red chili, hing, garlic", "Pour tadka over dal, add coriander, simmer 2 min"],
+      "videoReferences": [],
+      "ingredients": [
+        { "ingredientId": "ing_toor_dal", "quantity": 80, "unit": "g" },
+        { "ingredientId": "ing_turmeric", "quantity": 2, "unit": "g" },
+        { "ingredientId": "ing_ghee", "quantity": 10, "unit": "g" },
+        { "ingredientId": "ing_cumin_seeds", "quantity": 3, "unit": "g" },
+        { "ingredientId": "ing_mustard_seeds", "quantity": 2, "unit": "g" },
+        { "ingredientId": "ing_dry_red_chili", "quantity": 2, "unit": "pieces" },
+        { "ingredientId": "ing_hing", "quantity": 0.5, "unit": "g" },
+        { "ingredientId": "ing_garlic", "quantity": 3, "unit": "cloves" },
+        { "ingredientId": "ing_coriander", "quantity": 3, "unit": "g" },
+        { "ingredientId": "ing_salt", "quantity": 3, "unit": "g" }
+      ]
+    },
+    {
+      "id": "dish_dal_makhani",
+      "name": "Dal Makhani",
+      "componentId": "comp_dal",
+      "mealSubType": "any",
+      "isVegetarian": true,
+      "prepTimeMin": 60,
+      "recipeSteps": ["Soak urad dal + rajma overnight, pressure cook", "Sauté onion, ginger-garlic, tomato puree in butter", "Add dal, cream, simmer on low 30-40 min", "Finish with butter, cream, kasuri methi"],
+      "videoReferences": [],
+      "ingredients": [
+        { "ingredientId": "ing_urad_dal", "quantity": 80, "unit": "g" },
+        { "ingredientId": "ing_rajma", "quantity": 20, "unit": "g" },
+        { "ingredientId": "ing_onion", "quantity": 1, "unit": "pieces" },
+        { "ingredientId": "ing_tomato", "quantity": 2, "unit": "pieces" },
+        { "ingredientId": "ing_ginger", "quantity": 5, "unit": "g" },
+        { "ingredientId": "ing_garlic", "quantity": 4, "unit": "cloves" },
+        { "ingredientId": "ing_butter", "quantity": 30, "unit": "g" },
+        { "ingredientId": "ing_cream", "quantity": 30, "unit": "ml" },
+        { "ingredientId": "ing_red_chili_powder", "quantity": 3, "unit": "g" },
+        { "ingredientId": "ing_kasuri_methi", "quantity": 2, "unit": "g" },
+        { "ingredientId": "ing_salt", "quantity": 3, "unit": "g" }
+      ]
+    },
+    {
+      "id": "dish_moong_dal",
+      "name": "Moong Dal (Yellow)",
+      "componentId": "comp_dal",
+      "mealSubType": "any",
+      "isVegetarian": true,
+      "prepTimeMin": 25,
+      "recipeSteps": ["Dry roast moong dal 2 min, boil with turmeric, salt till soft", "Tadka: ghee, cumin, hing, garlic, green chili", "Pour over dal, add lemon juice, coriander"],
+      "videoReferences": [],
+      "ingredients": [
+        { "ingredientId": "ing_moong_dal", "quantity": 80, "unit": "g" },
+        { "ingredientId": "ing_turmeric", "quantity": 2, "unit": "g" },
+        { "ingredientId": "ing_ghee", "quantity": 10, "unit": "g" },
+        { "ingredientId": "ing_cumin_seeds", "quantity": 3, "unit": "g" },
+        { "ingredientId": "ing_hing", "quantity": 0.5, "unit": "g" },
+        { "ingredientId": "ing_garlic", "quantity": 2, "unit": "cloves" },
+        { "ingredientId": "ing_green_chili", "quantity": 1, "unit": "pieces" },
+        { "ingredientId": "ing_lemon", "quantity": 0.5, "unit": "pieces" },
+        { "ingredientId": "ing_coriander", "quantity": 3, "unit": "g" },
+        { "ingredientId": "ing_salt", "quantity": 3, "unit": "g" }
+      ]
+    },
+    {
+      "id": "dish_boondi_raita",
+      "name": "Boondi Raita",
+      "componentId": "comp_salad",
+      "mealSubType": "any",
+      "isVegetarian": true,
+      "prepTimeMin": 10,
+      "recipeSteps": ["Whisk curd till smooth, add water if needed", "Soak boondi in warm water 2 min, squeeze", "Add boondi, salt, roasted cumin, chili powder to curd", "Mix well, chill"],
+      "videoReferences": [],
+      "ingredients": [
+        { "ingredientId": "ing_curd", "quantity": 150, "unit": "g" },
+        { "ingredientId": "ing_besan", "quantity": 15, "unit": "g" },
+        { "ingredientId": "ing_cumin_powder", "quantity": 2, "unit": "g" },
+        { "ingredientId": "ing_red_chili_powder", "quantity": 1, "unit": "g" },
+        { "ingredientId": "ing_salt", "quantity": 2, "unit": "g" }
+      ]
+    },
+    {
+      "id": "dish_green_salad",
+      "name": "Green Salad",
+      "componentId": "comp_salad",
+      "mealSubType": "any",
+      "isVegetarian": true,
+      "prepTimeMin": 5,
+      "recipeSteps": ["Slice cucumber, onion, tomato thinly", "Arrange on plate, sprinkle salt, chaat masala", "Squeeze lemon on top"],
+      "videoReferences": [],
+      "ingredients": [
+        { "ingredientId": "ing_cucumber", "quantity": 1, "unit": "pieces" },
+        { "ingredientId": "ing_onion", "quantity": 0.5, "unit": "pieces" },
+        { "ingredientId": "ing_tomato", "quantity": 1, "unit": "pieces" },
+        { "ingredientId": "ing_lemon", "quantity": 0.5, "unit": "pieces" },
+        { "ingredientId": "ing_chaat_masala", "quantity": 1, "unit": "g" },
+        { "ingredientId": "ing_salt", "quantity": 1, "unit": "g" }
+      ]
+    },
+    {
+      "id": "dish_plain_curd",
+      "name": "Plain Curd",
+      "componentId": "comp_salad",
+      "mealSubType": "any",
+      "isVegetarian": true,
+      "prepTimeMin": 2,
+      "recipeSteps": ["Whisk curd until smooth", "Serve chilled in a bowl"],
+      "videoReferences": [],
+      "ingredients": [
+        { "ingredientId": "ing_curd", "quantity": 150, "unit": "g" }
+      ]
+    },
+    {
+      "id": "dish_cucumber_raita",
+      "name": "Cucumber Raita",
+      "componentId": "comp_salad",
+      "mealSubType": "any",
+      "isVegetarian": true,
+      "prepTimeMin": 8,
+      "recipeSteps": ["Grate cucumber, squeeze excess water", "Whisk curd, add cucumber, salt, roasted cumin powder", "Mix, garnish with coriander"],
+      "videoReferences": [],
+      "ingredients": [
+        { "ingredientId": "ing_curd", "quantity": 150, "unit": "g" },
+        { "ingredientId": "ing_cucumber", "quantity": 1, "unit": "pieces" },
+        { "ingredientId": "ing_cumin_powder", "quantity": 2, "unit": "g" },
+        { "ingredientId": "ing_coriander", "quantity": 2, "unit": "g" },
+        { "ingredientId": "ing_salt", "quantity": 2, "unit": "g" }
+      ]
+    },
+    {
+      "id": "dish_papad",
+      "name": "Papad (Roasted)",
+      "componentId": "comp_salad",
+      "mealSubType": "any",
+      "isVegetarian": true,
+      "prepTimeMin": 3,
+      "recipeSteps": ["Roast papad on open flame or microwave 30 sec", "Serve immediately"],
+      "videoReferences": [],
+      "ingredients": [
+        { "ingredientId": "ing_papad", "quantity": 2, "unit": "pieces" }
+      ]
+    },
+    {
+      "id": "dish_pickle",
+      "name": "Pickle (Achar)",
+      "componentId": "comp_salad",
+      "mealSubType": "any",
+      "isVegetarian": true,
+      "prepTimeMin": 1,
+      "recipeSteps": ["Spoon pickle into a small bowl", "Serve as accompaniment"],
+      "videoReferences": [],
+      "ingredients": [
+        { "ingredientId": "ing_pickle", "quantity": 20, "unit": "g" }
+      ]
+    },
+    {
+      "id": "dish_masala_omelette",
+      "name": "Masala Omelette",
+      "componentId": "comp_breakfast",
+      "mealSubType": "breakfast",
+      "isVegetarian": false,
+      "prepTimeMin": 10,
+      "recipeSteps": ["Beat eggs with chopped onion, tomato, green chili, coriander, salt", "Heat oil in pan, pour mixture", "Cook both sides till golden", "Serve with bread or roti"],
+      "videoReferences": [],
+      "ingredients": [
+        { "ingredientId": "ing_eggs", "quantity": 3, "unit": "pieces" },
+        { "ingredientId": "ing_onion", "quantity": 0.5, "unit": "pieces" },
+        { "ingredientId": "ing_tomato", "quantity": 0.5, "unit": "pieces" },
+        { "ingredientId": "ing_green_chili", "quantity": 1, "unit": "pieces" },
+        { "ingredientId": "ing_coriander", "quantity": 3, "unit": "g" },
+        { "ingredientId": "ing_oil", "quantity": 10, "unit": "ml" },
+        { "ingredientId": "ing_salt", "quantity": 2, "unit": "g" }
+      ]
+    },
+    {
+      "id": "dish_boiled_eggs",
+      "name": "Boiled Eggs",
+      "componentId": "comp_breakfast",
+      "mealSubType": "breakfast",
+      "isVegetarian": false,
+      "prepTimeMin": 12,
+      "recipeSteps": ["Place eggs in cold water, bring to boil", "Boil 8 min for hard, 6 min for soft", "Peel, sprinkle salt and pepper, serve"],
+      "videoReferences": [],
+      "ingredients": [
+        { "ingredientId": "ing_eggs", "quantity": 3, "unit": "pieces" },
+        { "ingredientId": "ing_salt", "quantity": 1, "unit": "g" }
+      ]
+    },
+    {
+      "id": "dish_besan_chilla",
+      "name": "Besan Chilla",
+      "componentId": "comp_breakfast",
+      "mealSubType": "breakfast",
+      "isVegetarian": true,
+      "prepTimeMin": 15,
+      "recipeSteps": ["Mix besan with water to smooth batter, add salt, turmeric, chili", "Add finely chopped onion, tomato, coriander", "Pour on hot tawa like pancake, cook both sides", "Serve with chutney or curd"],
+      "videoReferences": [],
+      "ingredients": [
+        { "ingredientId": "ing_besan", "quantity": 60, "unit": "g" },
+        { "ingredientId": "ing_onion", "quantity": 0.5, "unit": "pieces" },
+        { "ingredientId": "ing_tomato", "quantity": 0.5, "unit": "pieces" },
+        { "ingredientId": "ing_green_chili", "quantity": 1, "unit": "pieces" },
+        { "ingredientId": "ing_turmeric", "quantity": 1, "unit": "g" },
+        { "ingredientId": "ing_red_chili_powder", "quantity": 1, "unit": "g" },
+        { "ingredientId": "ing_coriander", "quantity": 3, "unit": "g" },
+        { "ingredientId": "ing_oil", "quantity": 10, "unit": "ml" },
+        { "ingredientId": "ing_salt", "quantity": 2, "unit": "g" }
+      ]
+    },
+    {
+      "id": "dish_idli",
+      "name": "Idli + Sambar",
+      "componentId": "comp_breakfast",
+      "mealSubType": "breakfast",
+      "isVegetarian": true,
+      "prepTimeMin": 30,
+      "recipeSteps": ["Steam fermented idli batter in idli moulds 10-12 min", "Sambar: boil toor dal, add tamarind water, sambar powder, vegetables", "Temper with mustard, curry leaves, hing", "Serve idlis hot with sambar and coconut chutney"],
+      "videoReferences": [],
+      "ingredients": [
+        { "ingredientId": "ing_sooji", "quantity": 60, "unit": "g" },
+        { "ingredientId": "ing_toor_dal", "quantity": 30, "unit": "g" },
+        { "ingredientId": "ing_onion", "quantity": 0.5, "unit": "pieces" },
+        { "ingredientId": "ing_tomato", "quantity": 1, "unit": "pieces" },
+        { "ingredientId": "ing_drumstick", "quantity": 2, "unit": "pieces" },
+        { "ingredientId": "ing_tamarind", "quantity": 10, "unit": "g" },
+        { "ingredientId": "ing_sambar_powder", "quantity": 10, "unit": "g" },
+        { "ingredientId": "ing_mustard_seeds", "quantity": 2, "unit": "g" },
+        { "ingredientId": "ing_curry_leaves", "quantity": 1, "unit": "sprigs" },
+        { "ingredientId": "ing_hing", "quantity": 0.5, "unit": "g" },
+        { "ingredientId": "ing_oil", "quantity": 10, "unit": "ml" },
+        { "ingredientId": "ing_coconut", "quantity": 30, "unit": "g" },
+        { "ingredientId": "ing_green_chili", "quantity": 2, "unit": "pieces" },
+        { "ingredientId": "ing_salt", "quantity": 3, "unit": "g" }
+      ]
+    },
+    {
+      "id": "dish_dosa",
+      "name": "Dosa (Plain/Masala)",
+      "componentId": "comp_breakfast",
+      "mealSubType": "breakfast",
+      "isVegetarian": true,
+      "prepTimeMin": 25,
+      "recipeSteps": ["Spread fermented dosa batter thin on hot tawa", "Drizzle oil, cook till crispy golden", "For masala: fill with spiced potato filling", "Serve with sambar and coconut chutney"],
+      "videoReferences": [],
+      "ingredients": [
+        { "ingredientId": "ing_sooji", "quantity": 70, "unit": "g" },
+        { "ingredientId": "ing_potato", "quantity": 1, "unit": "pieces" },
+        { "ingredientId": "ing_onion", "quantity": 0.5, "unit": "pieces" },
+        { "ingredientId": "ing_green_chili", "quantity": 2, "unit": "pieces" },
+        { "ingredientId": "ing_mustard_seeds", "quantity": 2, "unit": "g" },
+        { "ingredientId": "ing_curry_leaves", "quantity": 1, "unit": "sprigs" },
+        { "ingredientId": "ing_oil", "quantity": 15, "unit": "ml" },
+        { "ingredientId": "ing_coconut", "quantity": 30, "unit": "g" },
+        { "ingredientId": "ing_salt", "quantity": 2, "unit": "g" }
+      ]
+    },
+    {
+      "id": "dish_poha",
+      "name": "Kanda Poha",
+      "componentId": "comp_breakfast",
+      "mealSubType": "breakfast",
+      "isVegetarian": true,
+      "prepTimeMin": 15,
+      "recipeSteps": ["Wash poha, drain, keep aside", "Sauté mustard, cumin, curry leaves, onion, green chili, peanuts in oil", "Add turmeric, poha, salt, sugar, mix gently", "Cover 2 min, garnish with coriander, lemon"],
+      "videoReferences": [],
+      "ingredients": [
+        { "ingredientId": "ing_poha", "quantity": 80, "unit": "g" },
+        { "ingredientId": "ing_onion", "quantity": 1, "unit": "pieces" },
+        { "ingredientId": "ing_green_chili", "quantity": 2, "unit": "pieces" },
+        { "ingredientId": "ing_peanuts", "quantity": 15, "unit": "g" },
+        { "ingredientId": "ing_mustard_seeds", "quantity": 2, "unit": "g" },
+        { "ingredientId": "ing_cumin_seeds", "quantity": 2, "unit": "g" },
+        { "ingredientId": "ing_curry_leaves", "quantity": 1, "unit": "sprigs" },
+        { "ingredientId": "ing_turmeric", "quantity": 2, "unit": "g" },
+        { "ingredientId": "ing_sugar", "quantity": 3, "unit": "g" },
+        { "ingredientId": "ing_oil", "quantity": 10, "unit": "ml" },
+        { "ingredientId": "ing_lemon", "quantity": 0.5, "unit": "pieces" },
+        { "ingredientId": "ing_coriander", "quantity": 3, "unit": "g" },
+        { "ingredientId": "ing_salt", "quantity": 2, "unit": "g" }
+      ]
+    },
+    {
+      "id": "dish_upma",
+      "name": "Vegetable Upma",
+      "componentId": "comp_breakfast",
+      "mealSubType": "breakfast",
+      "isVegetarian": true,
+      "prepTimeMin": 20,
+      "recipeSteps": ["Dry roast sooji till light golden, keep aside", "Sauté mustard, urad dal, chana dal, curry leaves, onion, vegetables", "Add water (3x sooji), salt, bring to boil", "Add sooji slowly while stirring, cook till thick"],
+      "videoReferences": [],
+      "ingredients": [
+        { "ingredientId": "ing_sooji", "quantity": 70, "unit": "g" },
+        { "ingredientId": "ing_onion", "quantity": 0.5, "unit": "pieces" },
+        { "ingredientId": "ing_carrot", "quantity": 0.5, "unit": "pieces" },
+        { "ingredientId": "ing_peas", "quantity": 20, "unit": "g" },
+        { "ingredientId": "ing_beans", "quantity": 20, "unit": "g" },
+        { "ingredientId": "ing_green_chili", "quantity": 2, "unit": "pieces" },
+        { "ingredientId": "ing_mustard_seeds", "quantity": 2, "unit": "g" },
+        { "ingredientId": "ing_curry_leaves", "quantity": 1, "unit": "sprigs" },
+        { "ingredientId": "ing_oil", "quantity": 10, "unit": "ml" },
+        { "ingredientId": "ing_lemon", "quantity": 0.5, "unit": "pieces" },
+        { "ingredientId": "ing_salt", "quantity": 2, "unit": "g" }
+      ]
+    },
+    {
+      "id": "dish_oats_porridge",
+      "name": "Oats Porridge",
+      "componentId": "comp_breakfast",
+      "mealSubType": "breakfast",
+      "isVegetarian": true,
+      "prepTimeMin": 10,
+      "recipeSteps": ["Cook oats with milk/water on low flame, stirring", "Add salt or sugar based on preference", "Top with fruits, nuts, or honey"],
+      "videoReferences": [],
+      "ingredients": [
+        { "ingredientId": "ing_oats", "quantity": 50, "unit": "g" },
+        { "ingredientId": "ing_milk", "quantity": 200, "unit": "ml" },
+        { "ingredientId": "ing_honey", "quantity": 10, "unit": "ml" },
+        { "ingredientId": "ing_salt", "quantity": 1, "unit": "g" }
+      ]
+    },
+    {
+      "id": "dish_greek_yogurt_bowl",
+      "name": "Greek Yogurt Bowl",
+      "componentId": "comp_breakfast",
+      "mealSubType": "breakfast",
+      "isVegetarian": true,
+      "prepTimeMin": 5,
+      "recipeSteps": ["Spoon thick curd into bowl", "Top with fruits, nuts, seeds, honey", "Serve immediately"],
+      "videoReferences": [],
+      "ingredients": [
+        { "ingredientId": "ing_curd", "quantity": 200, "unit": "g" },
+        { "ingredientId": "ing_honey", "quantity": 10, "unit": "ml" },
+        { "ingredientId": "ing_peanuts", "quantity": 10, "unit": "g" }
+      ]
+    },
+    {
+      "id": "dish_coconut_chutney",
+      "name": "Coconut Chutney",
+      "componentId": "comp_bf_side",
+      "mealSubType": "breakfast",
+      "isVegetarian": true,
+      "prepTimeMin": 10,
+      "recipeSteps": ["Grind fresh grated coconut, green chili, ginger, roasted chana dal with water", "Temper with mustard seeds, curry leaves, urad dal in oil", "Pour tadka over chutney, mix in salt"],
+      "videoReferences": [],
+      "ingredients": [
+        { "ingredientId": "ing_coconut", "quantity": 50, "unit": "g" },
+        { "ingredientId": "ing_green_chili", "quantity": 2, "unit": "pieces" },
+        { "ingredientId": "ing_ginger", "quantity": 3, "unit": "g" },
+        { "ingredientId": "ing_mustard_seeds", "quantity": 2, "unit": "g" },
+        { "ingredientId": "ing_curry_leaves", "quantity": 1, "unit": "sprigs" },
+        { "ingredientId": "ing_oil", "quantity": 5, "unit": "ml" },
+        { "ingredientId": "ing_salt", "quantity": 2, "unit": "g" }
+      ]
+    },
+    {
+      "id": "dish_green_chutney",
+      "name": "Green Chutney (Mint-Coriander)",
+      "componentId": "comp_bf_side",
+      "mealSubType": "breakfast",
+      "isVegetarian": true,
+      "prepTimeMin": 8,
+      "recipeSteps": ["Blend mint leaves, coriander leaves, green chili, ginger, lemon juice, salt with a splash of water", "Adjust consistency — thick for spread, thin for dip", "Serve fresh"],
+      "videoReferences": [],
+      "ingredients": [
+        { "ingredientId": "ing_mint", "quantity": 20, "unit": "g" },
+        { "ingredientId": "ing_coriander", "quantity": 20, "unit": "g" },
+        { "ingredientId": "ing_green_chili", "quantity": 1, "unit": "pieces" },
+        { "ingredientId": "ing_ginger", "quantity": 3, "unit": "g" },
+        { "ingredientId": "ing_lemon", "quantity": 0.5, "unit": "pieces" },
+        { "ingredientId": "ing_salt", "quantity": 1, "unit": "g" }
+      ]
+    },
+    {
+      "id": "dish_tomato_sauce",
+      "name": "Tomato Sauce (Ketchup)",
+      "componentId": "comp_bf_side",
+      "mealSubType": "breakfast",
+      "isVegetarian": true,
+      "prepTimeMin": 1,
+      "recipeSteps": ["Pour tomato ketchup into a small bowl", "Serve as dip with paratha, bread toast, or sandwiches"],
+      "videoReferences": [],
+      "ingredients": [
+        { "ingredientId": "ing_tomato_sauce", "quantity": 20, "unit": "g" }
+      ]
+    },
+    {
+      "id": "dish_peanut_chutney",
+      "name": "Peanut Chutney",
+      "componentId": "comp_bf_side",
+      "mealSubType": "breakfast",
+      "isVegetarian": true,
+      "prepTimeMin": 10,
+      "recipeSteps": ["Dry roast peanuts, cool and remove skins", "Grind with green chili, garlic, tamarind, salt, water", "Temper with mustard seeds and curry leaves"],
+      "videoReferences": [],
+      "ingredients": [
+        { "ingredientId": "ing_peanuts", "quantity": 30, "unit": "g" },
+        { "ingredientId": "ing_green_chili", "quantity": 1, "unit": "pieces" },
+        { "ingredientId": "ing_garlic", "quantity": 1, "unit": "cloves" },
+        { "ingredientId": "ing_tamarind", "quantity": 5, "unit": "g" },
+        { "ingredientId": "ing_mustard_seeds", "quantity": 2, "unit": "g" },
+        { "ingredientId": "ing_curry_leaves", "quantity": 1, "unit": "sprigs" },
+        { "ingredientId": "ing_oil", "quantity": 5, "unit": "ml" },
+        { "ingredientId": "ing_salt", "quantity": 2, "unit": "g" }
+      ]
+    },
+    {
+      "id": "dish_egg_bhurji",
+      "name": "Egg Bhurji",
+      "componentId": "comp_breakfast",
+      "mealSubType": "breakfast",
+      "isVegetarian": false,
+      "prepTimeMin": 10,
+      "recipeSteps": ["Scramble eggs in bowl", "Sauté onion, tomato, green chili in oil", "Pour eggs, scramble continuously", "Add salt, chili, finish with coriander"],
+      "videoReferences": [],
+      "ingredients": [
+        { "ingredientId": "ing_eggs", "quantity": 3, "unit": "pieces" },
+        { "ingredientId": "ing_onion", "quantity": 0.5, "unit": "pieces" },
+        { "ingredientId": "ing_tomato", "quantity": 0.5, "unit": "pieces" },
+        { "ingredientId": "ing_green_chili", "quantity": 1, "unit": "pieces" },
+        { "ingredientId": "ing_oil", "quantity": 10, "unit": "ml" },
+        { "ingredientId": "ing_coriander", "quantity": 3, "unit": "g" },
+        { "ingredientId": "ing_salt", "quantity": 2, "unit": "g" }
+      ]
+    }
+  ],
+
+  "inventoryItems": [
+    { "ingredientId": "ing_onion", "quantity": 5, "unit": "pieces", "householdId": "household_default" },
+    { "ingredientId": "ing_tomato", "quantity": 6, "unit": "pieces", "householdId": "household_default" },
+    { "ingredientId": "ing_potato", "quantity": 4, "unit": "pieces", "householdId": "household_default" },
+    { "ingredientId": "ing_ginger", "quantity": 100, "unit": "g", "householdId": "household_default" },
+    { "ingredientId": "ing_garlic", "quantity": 2, "unit": "cloves", "householdId": "household_default" },
+    { "ingredientId": "ing_green_chili", "quantity": 10, "unit": "pieces", "householdId": "household_default" },
+    { "ingredientId": "ing_coriander", "quantity": 50, "unit": "g", "householdId": "household_default" },
+    { "ingredientId": "ing_lemon", "quantity": 3, "unit": "pieces", "householdId": "household_default" },
+    { "ingredientId": "ing_cucumber", "quantity": 2, "unit": "pieces", "householdId": "household_default" },
+    { "ingredientId": "ing_wheat_flour", "quantity": 5000, "unit": "g", "householdId": "household_default" },
+    { "ingredientId": "ing_rice", "quantity": 5000, "unit": "g", "householdId": "household_default" },
+    { "ingredientId": "ing_besan", "quantity": 1000, "unit": "g", "householdId": "household_default" },
+    { "ingredientId": "ing_toor_dal", "quantity": 1000, "unit": "g", "householdId": "household_default" },
+    { "ingredientId": "ing_moong_dal", "quantity": 500, "unit": "g", "householdId": "household_default" },
+    { "ingredientId": "ing_chana_dal", "quantity": 500, "unit": "g", "householdId": "household_default" },
+    { "ingredientId": "ing_masoor_dal", "quantity": 500, "unit": "g", "householdId": "household_default" },
+    { "ingredientId": "ing_urad_dal", "quantity": 500, "unit": "g", "householdId": "household_default" },
+    { "ingredientId": "ing_rajma", "quantity": 500, "unit": "g", "householdId": "household_default" },
+    { "ingredientId": "ing_chana", "quantity": 500, "unit": "g", "householdId": "household_default" },
+    { "ingredientId": "ing_turmeric", "quantity": 200, "unit": "g", "householdId": "household_default" },
+    { "ingredientId": "ing_red_chili_powder", "quantity": 200, "unit": "g", "householdId": "household_default" },
+    { "ingredientId": "ing_coriander_powder", "quantity": 200, "unit": "g", "householdId": "household_default" },
+    { "ingredientId": "ing_garam_masala", "quantity": 100, "unit": "g", "householdId": "household_default" },
+    { "ingredientId": "ing_cumin_seeds", "quantity": 200, "unit": "g", "householdId": "household_default" },
+    { "ingredientId": "ing_mustard_seeds", "quantity": 100, "unit": "g", "householdId": "household_default" },
+    { "ingredientId": "ing_oil", "quantity": 2000, "unit": "ml", "householdId": "household_default" },
+    { "ingredientId": "ing_ghee", "quantity": 500, "unit": "g", "householdId": "household_default" },
+    { "ingredientId": "ing_salt", "quantity": 1000, "unit": "g", "householdId": "household_default" },
+    { "ingredientId": "ing_sugar", "quantity": 500, "unit": "g", "householdId": "household_default" },
+    { "ingredientId": "ing_curd", "quantity": 500, "unit": "g", "householdId": "household_default" },
+    { "ingredientId": "ing_milk", "quantity": 2000, "unit": "ml", "householdId": "household_default" },
+    { "ingredientId": "ing_eggs", "quantity": 12, "unit": "pieces", "householdId": "household_default" },
+    { "ingredientId": "ing_butter", "quantity": 200, "unit": "g", "householdId": "household_default" },
+    { "ingredientId": "ing_oats", "quantity": 500, "unit": "g", "householdId": "household_default" },
+    { "ingredientId": "ing_poha", "quantity": 500, "unit": "g", "householdId": "household_default" },
+    { "ingredientId": "ing_sooji", "quantity": 500, "unit": "g", "householdId": "household_default" },
+    { "ingredientId": "ing_peanuts", "quantity": 250, "unit": "g", "householdId": "household_default" },
+    { "ingredientId": "ing_papad", "quantity": 20, "unit": "pieces", "householdId": "household_default" },
+    { "ingredientId": "ing_pickle", "quantity": 200, "unit": "g", "householdId": "household_default" },
+    { "ingredientId": "ing_tomato_sauce", "quantity": 500, "unit": "g", "householdId": "household_default" }
+  ]
+}
