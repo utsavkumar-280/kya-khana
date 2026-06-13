@@ -1,7 +1,7 @@
 # PRD: Kya Khana (क्या खाना)
 
-> **Status**: Draft v6 — composable meal templates added; data model restructured ✅
-> **Last updated**: 2026-06-08
+> **Status**: Draft v7 — 3-tab app architecture + veg-variant recommendation + scroll mechanics added ✅
+> **Last updated**: 2026-06-11
 
 ---
 
@@ -121,7 +121,81 @@ Ordering deadline
 
 ---
 
-## 3. Scope & Architecture Decisions
+## 3. App Architecture: 3-Tab Layout
+
+Kya Khana uses a **3-tab bottom navigation** pattern, keeping the app simple and action-focused:
+
+| Tab | Screen | Purpose |
+|-----|--------|---------|
+| 🏠 **Dashboard** | Today + upcoming meals + voting + meal history | The main action screen. Everything a housemate needs daily. |
+| 📦 **Inventory** | Ingredient stock + grocery list | Manage what's in the kitchen. Grocery list auto-generated from decided meals. |
+| ⚙️ **More** | Settings + cook view + notifications + profile | Low-frequency actions and configuration. |
+
+### 3.1 Dashboard: Scroll = Time Navigation
+
+The dashboard is an infinite vertical timeline with "Today" as the default anchor point. **Swipe finger upward** (push content up) to reveal future meals rising from below. **Swipe finger downward** (pull content down) to reveal past meals scrolling back from above.
+
+```
+         SWIPE UP (push content up → future meals rise from below)
+         ┌─────────────────────────────┐
+         │  Tomorrow              [📅]  │  ← calendar header updates
+         │  ┌─────────────────────────┐ │
+         │  │ Tomorrow Breakfast 🔒    │ │  ← greyed out (future, locked)
+         │  └─────────────────────────┘ │
+         │  ┌─────────────────────────┐ │
+         │  │ Tomorrow Lunch 🔒        │ │
+         │  └─────────────────────────┘ │
+    ┌────┼─────────────────────────────┼────┐  ← SNAP POINT
+    │    │  Today                        │    │
+    │    │  ┌─────────────────────────┐ │    │
+    │    │  │ Tonight's Dinner 🟢      │ │    │  ← ACTIVE (voting open)
+    │    │  │   Combo A  vs  Combo B  │ │    │
+    │    │  │   ⏰ 3h 12m left         │ │    │
+    │    │  └─────────────────────────┘ │    │
+    │    └─────────────────────────────┘    │
+    │                                       │
+    │    SWIPE DOWN (pull content down → past meals scroll from above)               │
+    │    ┌─────────────────────────────┐    │
+    │    │  Yesterday                    │    │  ← calendar header updates
+    │    │  ┌─────────────────────────┐ │    │
+    │    │  │ Morning Meal ✅           │ │    │  ← decided/cooked (result only)
+    │    │  └─────────────────────────┘ │    │
+    │    │  ┌─────────────────────────┐ │    │
+    │    │  │ Evening Meal ✅           │ │    │
+    │    │  └─────────────────────────┘ │    │
+         └─────────────────────────────┘
+```
+
+**Scroll Mechanics:**
+
+| Behavior | Detail |
+|----------|--------|
+| **Snap** | Each meal card magnet-snaps to the top position as the user scrolls past it. The calendar header updates to match the snapped date. |
+| **Calendar dropdown** | A 📅 icon in the header provides quick-jump to any past/future date. Selecting a date auto-scrolls the dashboard to that day's snap point. |
+| **Active meals** | Full color, live countdown timer, vote buttons enabled, 2 combo choices visible. |
+| **Locked meals (future)** | Greyed out. Preview visible but vote buttons disabled until their voting window opens. |
+| **Past meals** | Show only the decided result (winning combo), not the voting options. Marked with ✅ checkmark. |
+
+### 3.2 Inventory Tab
+
+Split into two views via a toggle at the top:
+
+- **Stock view**: Ingredient list with current quantities, add/update items
+- **Grocery list view**: Auto-generated from decided meals, shows required vs available quantities, shareable via WhatsApp
+
+### 3.3 More Tab
+
+Consolidates low-frequency actions:
+
+- 👨‍🍳 Cook View — today's recipes, video refs, "Mark as Cooked" button
+- 🔔 Notifications — in-app notification history
+- 📋 Meal Templates — edit component structure
+- 🕐 Cook Times — configure morning/evening cook times
+- 👤 Profile / Logout
+
+---
+
+## 4. Scope & Architecture Decisions
 
 | Decision | Choice | Rationale |
 |----------|--------|-----------|
@@ -133,7 +207,7 @@ Ordering deadline
 
 ---
 
-## 4. User Roles
+## 5. User Roles
 
 | Role | Permissions |
 |------|-------------|
@@ -145,9 +219,9 @@ Ordering deadline
 
 ---
 
-## 5. Feature Breakdown
+## 6. Feature Breakdown
 
-### 5.1 Meal Templates & Components (Core Concept)
+### 6.1 Meal Templates & Components (Core Concept)
 
 Instead of suggesting standalone dishes, the app suggests **complete meal combos** built from user-defined food components. This makes the app cuisine-agnostic — it adapts to any food culture.
 
@@ -180,7 +254,7 @@ Combo #2: Jeera Rice + Chicken Curry + (skip dal) + Green Salad
 - Or build their own by defining components
 - For v1: pre-built templates with ability to customize
 
-### 5.2 Dish Library (v1: pre-seeded)
+### 6.2 Dish Library (v1: pre-seeded)
 
 - Collection of ~30–50 dishes, organized by component
 - Each dish belongs to one **component** (carb, sabji, dal, curd, etc.)
@@ -195,7 +269,7 @@ Combo #2: Jeera Rice + Chicken Curry + (skip dal) + Green Salad
   - Tags: vegetarian/non-vegetarian, spice level, prep time
 - **No CRUD UI in v1** — managed via seed script / database
 
-### 5.3 Grocery Inventory
+### 6.3 Grocery Inventory
 
 - Manual inventory of available ingredients
 - Each inventory item:
@@ -208,7 +282,7 @@ Combo #2: Jeera Rice + Chicken Curry + (skip dal) + Green Salad
   - Manual: user marks item as depleted or adjusts quantity
   - Auto-deduction proposal: when a meal is marked "cooked", the app proposes deductions → user reviews, adjusts, and confirms
 
-### 5.4 Meal Suggestions & Progressive Stacking
+### 6.4 Meal Suggestions & Progressive Stacking
 
 - **10:00 AM** (after morning cook): Reveals **up to 3 future meals** — today PM, tomorrow AM, tomorrow PM
 - **9:30 PM** (after evening cook): Fills gaps — only shows **undecided meals**
@@ -221,7 +295,40 @@ Combo #2: Jeera Rice + Chicken Curry + (skip dal) + Green Salad
 - Users choose **how many meals to lock in**
 - Evening suggestion respects prior decisions, fills only gaps
 
-### 5.5 Voting
+#### 6.4.1 Veg/Non-Veg Variant Recommendation
+
+When a meal combo contains a non-vegetarian sabji/protein component:
+
+- The app **automatically generates a veg-variant note** displayed below that combo
+- The veg variant replaces ONLY the non-veg sabji with a vegetarian alternative — all other components (carb, dal, salad) remain identical
+- The veg variant is **informational only** — users vote on Combo A or Combo B, not on the variant
+- If the non-veg combo wins the vote, the cook prepares **both** the non-veg sabji AND the veg sabji
+- This ensures vegetarian housemates always have a sabji to eat regardless of which combo wins
+- **Breakfast combos are exempt** from this rule (breakfast dishes are predominantly vegetarian)
+- The veg variant note is visible to **all users**, not just those with veg preferences
+
+Example card structure:
+
+```
+┌────────────────────────────────────────────────────┐
+│  Tonight's Dinner                        ⏰ 3h 12m  │
+│                                                    │
+│  Combo A                            Combo B        │
+│  ┌────────────────────────┐  ┌──────────────────┐  │
+│  │ 🍚 Jeera Rice           │  │ 🫓 Wheat Roti     │  │
+│  │ 🍗 Butter Chicken      │  │ 🌿 Palak Paneer   │  │
+│  │ 🫘 Dal Tadka            │  │ 🫘 Dal Makhani    │  │
+│  │ 🥗 Green Salad          │  │ 🥒 Boondi Raita   │  │
+│  │                         │  └──────────────────┘  │
+│  │ 🌿 Veg option:          │                        │
+│  │   Paneer Butter Masala  │                        │
+│  └────────────────────────┘                        │
+│  [ Vote A ]                            [ Vote B ]  │
+│  🟢 2 votes                             🍗 1 vote  │
+└────────────────────────────────────────────────────┘
+```
+
+### 6.5 Voting
 
 - Users vote on **complete meal combos**, not individual dishes
 - 2 combos per meal slot → user picks their preferred combo
@@ -233,7 +340,7 @@ Combo #2: Jeera Rice + Chicken Curry + (skip dal) + Green Salad
 - **Default (no votes)**: Combo with the highest combined inventory-availability score wins
 - **Tie-breaker** ✅: Inventory comparison across both combos → housemates manually break
 
-### 5.6 Notification Escalation
+### 6.6 Notification Escalation
 
 Triggered when no user interacts with the app after a suggestion time. Escalating frequency:
 
@@ -249,7 +356,7 @@ Suggestion time (T)
 - Notifications stop on first user interaction (app open / vote cast)
 - If all meals are already decided at suggestion time → single gentle reminder, no escalation
 
-### 5.7 Combined Grocery List
+### 6.7 Combined Grocery List
 
 - Sums ingredients from **all dishes in the winning combo**
 - Generated/refreshed at each meal's ordering deadline (6 AM, 5:30 PM)
@@ -260,7 +367,7 @@ Suggestion time (T)
   - User reviews, adjusts, confirms → inventory updated
 - Shareable via: WhatsApp link, copy-to-clipboard, plain text export
 
-### 5.8 Push Notifications (All Types)
+### 6.8 Push Notifications (All Types)
 
 - **"Time to vote!"** — at suggestion time (10 AM, 9:30 PM). Shows revealed meals.
 - **Escalation cascade** — if no interaction: 1h → 30min → 15min → ... → 5min before deadline (see 5.5)
@@ -271,12 +378,12 @@ Suggestion time (T)
 - **"Low inventory"** — staple ingredient below threshold.
 - In-app notification history
 
-### 5.9 Meal History
+### 6.9 Meal History
 
 - Log of all past meals: date, meal type, chosen dish, who voted for what
 - Used by suggestion algorithm to avoid repetition
 
-### 5.10 Cook's Dashboard
+### 6.10 Cook's Dashboard
 
 - Cook logs in → sees the **current meal board**:
   - Which dish is decided for the upcoming cook time
@@ -287,7 +394,7 @@ Suggestion time (T)
   - Sends "Food is ready!" push to all housemates
 - Cook can also view past meals and their recipes for reference
 
-### 5.11 Onboarding Flow (v1)
+### 6.11 Onboarding Flow (v1)
 
 - New user signs up → sets:
   - Name, email, password
@@ -303,7 +410,7 @@ Suggestion time (T)
 
 ---
 
-## 6. Data Model (Draft v6)
+## 7. Data Model (Draft v7)
 
 ```mermaid
 erDiagram
@@ -469,7 +576,7 @@ erDiagram
 
 ---
 
-## 7. Tech Stack (Finalized)
+## 8. Tech Stack (Finalized)
 
 | Layer | Choice | Why |
 |-------|--------|-----|
@@ -522,7 +629,7 @@ erDiagram
 
 ---
 
-## 8. Resolved Questions ✅
+## 9. Resolved Questions ✅
 
 ### Q1: Suggestion Algorithm — **Hybrid Rotation + Inventory-Aware**
 Rotate through dishes avoiding recent repeats, score by ingredient availability, add randomness.
@@ -554,6 +661,9 @@ Each meal closes at its own deadline (6 AM for morning, 5:30 PM for evening). De
 ### Q10: Cooking-Meal Times — **User-Configured at Onboarding**
 Defaults: 8 AM & 7:30 PM. Suggestion time = cook + 2h. Ordering deadline = cook − 2h. All derived automatically.
 
+### Q16: Veg/Non-Veg Recommendation — Informational Veg Variant Note
+When a combo has a non-veg sabji, show a veg-variant note below that combo. Users vote A or B only — the variant is informational. If non-veg combo wins, cook makes both veg and non-veg sabji. Breakfast exempt.
+
 ### Q11: Meal Composition — **Composable Templates with Components**
 Meals are built from user-defined components (Carb, Sabji, Dal, Curd, etc.). Each component maps to a pool of dishes. Suggestions are complete combos. Voting is on the full combo. Cuisine-agnostic.
 
@@ -571,7 +681,7 @@ Most mature ecosystem, best library compatibility, 114K+ req/s with Fastify. Bun
 
 ---
 
-## 9. Out of Scope (v1)
+## 10. Out of Scope (v1)
 
 - User-contributed dishes (add/edit/delete UI)
 - Delivery service integration
@@ -587,7 +697,7 @@ Most mature ecosystem, best library compatibility, 114K+ req/s with Fastify. Bun
 
 ---
 
-## 10. Success Metrics (v1)
+## 11. Success Metrics (v1)
 
 - [ ] 100% of meal cycles have a decided dish before the cook arrives
 - [ ] Grocery list generated within 5 minutes of vote conclusion
