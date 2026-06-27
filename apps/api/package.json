@@ -1,0 +1,29 @@
+{
+  "name": "@kya-khana/api",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx watch --env-file=.env src/index.ts",
+    "start": "node dist/index.js",
+    "typecheck": "tsc --noEmit",
+    "lint": "echo 'lint not configured'"
+  },
+  "dependencies": {
+    "@better-auth/prisma-adapter": "^1.6.22",
+    "@fastify/cors": "^10.0.0",
+    "@kya-khana/core": "workspace:^",
+    "@kya-khana/db": "workspace:*",
+    "@kya-khana/types": "workspace:*",
+    "better-auth": "^1.6.22",
+    "fastify": "^5.2.0",
+    "web-push": "^3.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/web-push": "^3.6.4",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
+  }
+}

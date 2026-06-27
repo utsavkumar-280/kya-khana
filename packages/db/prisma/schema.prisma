@@ -1,0 +1,348 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  housemate
+  cook
+  admin
+}
+
+enum MealSubType {
+  breakfast
+  lunch
+  dinner
+  any
+}
+
+enum MealType {
+  morning
+  evening
+}
+
+enum MealCycleStatus {
+  pending
+  voting
+  decided
+  cooked
+}
+
+enum DecidedBy {
+  votes
+  tie_break
+  default
+}
+
+enum SuggestionType {
+  morning_10am
+  evening_930pm
+}
+
+enum MealWindowState {
+  active
+  closed
+}
+
+enum GroceryListStatus {
+  pending
+  shared
+  ordered
+  fulfilled
+}
+
+model User {
+  id            String    @id
+  name          String
+  email         String    @unique
+  emailVerified Boolean?
+  image         String?
+  role          UserRole
+  householdId   String
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @default(now()) @updatedAt
+
+  household         Household @relation(fields: [householdId], references: [id], onDelete: Cascade)
+  votes             Vote[]
+  sessions          Session[]
+  accounts          Account[]
+  pushSubscriptions PushSubscription[]
+}
+
+model Household {
+  id                String          @id
+  name              String
+  cuisinePreference String
+  morningCookTime   DateTime?       @db.Time(0)
+  eveningCookTime   DateTime?       @db.Time(0)
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @default(now()) @updatedAt
+
+  users             User[]
+  mealTemplates     MealTemplate[]
+  inventoryItems    InventoryItem[]
+  mealCycles        MealCycle[]
+  mealWindows       MealWindow[]
+  groceryLists      GroceryList[]
+  pushSubscriptions PushSubscription[]
+}
+
+model Session {
+  id        String   @id
+  userId    String
+  token     String   @unique
+  expiresAt DateTime
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Account {
+  id                   String    @id @default(cuid())
+  userId               String
+  accountId            String
+  providerId           String
+  accessToken          String?
+  refreshToken         String?
+  accessTokenExpiresAt DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                String?
+  idToken              String?
+  password             String?
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @default(now()) @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([providerId, userId])
+}
+
+model Verification {
+  id         String   @id @default(cuid())
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+}
+
+model MealTemplate {
+  id          String      @id
+  householdId String
+  name        String
+  mealSubType MealSubType
+  isActive    Boolean     @default(true)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @default(now()) @updatedAt
+
+  household  Household      @relation(fields: [householdId], references: [id], onDelete: Cascade)
+  components MealComponent[]
+  cycles     MealCycle[]
+}
+
+model MealComponent {
+  id            String   @id
+  mealTemplateId String
+  name          String
+  isRequired    Boolean
+  displayOrder  Int
+  minSelections Int
+  maxSelections Int
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @default(now()) @updatedAt
+
+  mealTemplate MealTemplate @relation(fields: [mealTemplateId], references: [id], onDelete: Cascade)
+  dishes       Dish[]
+  comboItems   MealComboItem[]
+}
+
+model Dish {
+  id              String   @id
+  name            String
+  componentId     String
+  mealSubType     MealSubType
+  isVegetarian    Boolean
+  prepTimeMin     Int
+  recipeSteps     String[]
+  videoReferences String[]
+  imageUrl        String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @default(now()) @updatedAt
+
+  component     MealComponent   @relation(fields: [componentId], references: [id], onDelete: Restrict)
+  ingredients   DishIngredient[]
+  comboItems    MealComboItem[]
+}
+
+model Ingredient {
+  id          String   @id
+  name        String
+  defaultUnit String
+  category    String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now()) @updatedAt
+
+  dishIngredients  DishIngredient[]
+  inventoryItems   InventoryItem[]
+  groceryListItems GroceryListItem[]
+}
+
+model DishIngredient {
+  id           String @id @default(cuid())
+  dishId       String
+  ingredientId String
+  quantity     Float
+  unit         String
+
+  dish       Dish       @relation(fields: [dishId], references: [id], onDelete: Cascade)
+  ingredient Ingredient @relation(fields: [ingredientId], references: [id], onDelete: Restrict)
+
+  @@unique([dishId, ingredientId])
+}
+
+model InventoryItem {
+  id           String   @id
+  householdId  String
+  ingredientId String
+  quantity     Float
+  unit         String
+  updatedAt    DateTime @updatedAt
+  createdAt    DateTime @default(now())
+
+  household  Household  @relation(fields: [householdId], references: [id], onDelete: Cascade)
+  ingredient Ingredient @relation(fields: [ingredientId], references: [id], onDelete: Restrict)
+
+  @@unique([householdId, ingredientId])
+}
+
+model MealCycle {
+  id                String          @id @default(cuid())
+  householdId       String
+  date              DateTime        @db.Date
+  mealType          MealType
+  mealSubType       MealSubType
+  mealTemplateId    String
+  cookTime          DateTime?       @db.Time(0)
+  orderingDeadline  DateTime?       @db.Time(0)
+  suggestionTime    DateTime?       @db.Time(0)
+  revealedAt        DateTime?
+  status            MealCycleStatus
+  winningComboId    String? @unique
+  decidedBy         DecidedBy?
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @default(now()) @updatedAt
+
+  household    Household       @relation(fields: [householdId], references: [id], onDelete: Cascade)
+  mealTemplate MealTemplate  @relation(fields: [mealTemplateId], references: [id], onDelete: Restrict)
+  mealCombos   MealCombo[]
+  winningCombo MealCombo?    @relation(name: "WinningCombo", fields: [winningComboId], references: [id], onDelete: SetNull)
+  votes        Vote[]
+  windowItems  MealWindowItem[]
+}
+
+model MealWindow {
+  id              String          @id @default(cuid())
+  householdId     String
+  revealedAt      DateTime
+  suggestionType  SuggestionType
+  status          MealWindowState
+
+  household    Household        @relation(fields: [householdId], references: [id], onDelete: Cascade)
+  items        MealWindowItem[]
+  groceryLists GroceryList[]
+}
+
+model MealWindowItem {
+  id           String @id @default(cuid())
+  mealWindowId String
+  mealCycleId  String
+  displayOrder Int
+
+  mealWindow MealWindow @relation(fields: [mealWindowId], references: [id], onDelete: Cascade)
+  mealCycle  MealCycle  @relation(fields: [mealCycleId], references: [id], onDelete: Cascade)
+}
+
+model MealCombo {
+  id          String @id @default(cuid())
+  mealCycleId String
+  displayOrder Int
+
+  mealCycle      MealCycle       @relation(fields: [mealCycleId], references: [id], onDelete: Cascade)
+  items          MealComboItem[]
+  votes          Vote[]
+  winningInCycle MealCycle?      @relation("WinningCombo")
+}
+
+model MealComboItem {
+  id               String @id @default(cuid())
+  mealComboId      String
+  mealComponentId  String
+  dishId           String
+
+  mealCombo     MealCombo     @relation(fields: [mealComboId], references: [id], onDelete: Cascade)
+  mealComponent MealComponent @relation(fields: [mealComponentId], references: [id], onDelete: Restrict)
+  dish          Dish          @relation(fields: [dishId], references: [id], onDelete: Restrict)
+}
+
+model Vote {
+  id          String   @id @default(cuid())
+  mealCycleId String
+  userId      String
+  mealComboId String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now()) @updatedAt
+
+  mealCycle MealCycle @relation(fields: [mealCycleId], references: [id], onDelete: Cascade)
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  mealCombo MealCombo @relation(fields: [mealComboId], references: [id], onDelete: Cascade)
+
+  @@unique([mealCycleId, userId])
+}
+
+model GroceryList {
+  id           String            @id @default(cuid())
+  mealWindowId String
+  householdId  String
+  status       GroceryListStatus
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @default(now()) @updatedAt
+
+  mealWindow MealWindow      @relation(fields: [mealWindowId], references: [id], onDelete: Cascade)
+  household  Household       @relation(fields: [householdId], references: [id], onDelete: Cascade)
+  items      GroceryListItem[]
+}
+
+model GroceryListItem {
+  id                String @id @default(cuid())
+  groceryListId     String
+  ingredientId      String
+  requiredQuantity  Float
+  availableQuantity Float
+  shortfall         Float
+  unit              String
+
+  groceryList GroceryList @relation(fields: [groceryListId], references: [id], onDelete: Cascade)
+  ingredient  Ingredient  @relation(fields: [ingredientId], references: [id], onDelete: Restrict)
+}
+
+model PushSubscription {
+  id        String   @id @default(cuid())
+  householdId String
+  userId    String
+  endpoint  String
+  p256dh    String
+  auth      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  household Household @relation(fields: [householdId], references: [id], onDelete: Cascade)
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, endpoint])
+}

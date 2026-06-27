@@ -1,0 +1,29 @@
+{
+  "name": "@kya-khana/core",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@kya-khana/db": "workspace:*",
+    "@kya-khana/types": "workspace:*",
+    "node-cron": "^4.5.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/node-cron": "^3.0.11",
+    "@types/web-push": "^3.6.0",
+    "typescript": "^5.7.0"
+  }
+}
