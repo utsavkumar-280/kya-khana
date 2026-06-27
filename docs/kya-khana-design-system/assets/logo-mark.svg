@@ -1,0 +1,12 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Kya Khana mark">
+  
+  <circle cx="60" cy="60" r="52" fill="#E65100"></circle>
+  <circle cx="60" cy="60" r="52" stroke="#A63A10" stroke-width="3" fill="none" opacity="0.25"></circle>
+  <circle cx="60" cy="60" r="41" fill="#FBF5EC"></circle>
+  
+  <circle cx="60" cy="42" r="13" fill="#2E7D32"></circle>
+  <circle cx="44" cy="72" r="13" fill="#C62828"></circle>
+  <circle cx="76" cy="72" r="13" fill="#F0B82E"></circle>
+  
+  <circle cx="60" cy="60" r="5.5" fill="#E65100"></circle>
+</svg>

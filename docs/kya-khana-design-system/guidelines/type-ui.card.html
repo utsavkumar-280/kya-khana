@@ -1,0 +1,28 @@
+<!-- @dsCard group="Type" viewport="700x230" name="UI Text — Be Vietnam Pro" subtitle="Body, labels & captions for all interface chrome" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  body { margin: 0; padding: 24px; background: var(--bg-app); font-family: var(--font-sans); color: var(--text-primary); }
+  .stack > div { display: flex; align-items: baseline; gap: 16px; padding: 5px 0; border-bottom: 1px solid var(--border); }
+  .stack > div:last-child { border-bottom: 0; }
+  .tag { font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); width: 120px; flex-shrink: 0; }
+  .lg { font-size: 17px; font-weight: 600; }
+  .md { font-size: 15px; font-weight: 400; }
+  .sm { font-size: 13px; font-weight: 400; color: var(--text-secondary); }
+  .xs { font-size: 12px; font-weight: 500; color: var(--text-muted); }
+  .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+</style>
+</head>
+<body>
+  <div class="stack">
+    <div><span class="tag">eyebrow / 700</span><span class="eyebrow">Today · Evening</span></div>
+    <div><span class="tag">lg / 600 · 17</span><span class="lg">Choose tonight's dinner</span></div>
+    <div><span class="tag">md / 400 · 15</span><span class="md">Roti, Dal Makhani, Boondi Raita and salad.</span></div>
+    <div><span class="tag">sm / 400 · 13</span><span class="sm">Voting closes when the cook arrives at 5:30 PM.</span></div>
+    <div><span class="tag">xs / 500 · 12</span><span class="xs">Updated 2 minutes ago</span></div>
+  </div>
+</body>
+</html>

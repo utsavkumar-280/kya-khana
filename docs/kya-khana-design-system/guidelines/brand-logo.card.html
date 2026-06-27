@@ -1,0 +1,35 @@
+<!-- @dsCard group="Brand" viewport="700x200" name="Logo & Wordmark" subtitle="Thali mark + kya-khana wordmark with Devanagari lockup" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  body { margin: 0; padding: 24px; background: var(--bg-app); font-family: var(--font-display); }
+  .row { display: flex; gap: 36px; align-items: center; }
+  .lockup { display: flex; align-items: center; gap: 16px; }
+  .lockup img { width: 64px; height: 64px; }
+  .names { line-height: 1; }
+  .en { font-size: 30px; font-weight: 800; letter-spacing: -0.03em; color: var(--text-brand); }
+  .en .dash { color: var(--text-muted); font-weight: 600; }
+  .hi { font-family: var(--font-deva); font-size: 18px; font-weight: 600; color: var(--saffron-500); margin-top: 4px; }
+  .onDark { background: var(--neutral-900); padding: 16px 22px; border-radius: var(--radius-lg); }
+  .onDark .en { color: var(--saffron-300); }
+  .onDark .hi { color: var(--saffron-200); }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div class="lockup">
+      <img src="../assets/logo-mark.svg" alt="Kya Khana mark">
+      <div class="names"><div class="en">kya<span class="dash">-</span>khana</div><div class="hi">क्या खाना</div></div>
+    </div>
+    <div class="onDark">
+      <div class="lockup">
+        <img src="../assets/logo-mark.svg" alt="Kya Khana mark">
+        <div class="names"><div class="en">kya<span class="dash">-</span>khana</div><div class="hi">क्या खाना</div></div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!-- @dsCard group="Type" viewport="700x170" name="Numeric — Plus Jakarta Sans (tabular)" subtitle="Tabular figures for countdowns, vote counts & quantities" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  body { margin: 0; padding: 24px; background: var(--bg-app); font-family: var(--font-sans); }
+  .row { display: flex; gap: 28px; align-items: flex-end; flex-wrap: wrap; }
+  .mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; color: var(--text-primary); }
+  .timer { font-size: 40px; font-weight: 800; letter-spacing: -0.02em; color: var(--timer); }
+  .count { font-size: 24px; font-weight: 800; }
+  .qty { font-size: 17px; font-weight: 700; color: var(--text-secondary); }
+  .tag { font-family: var(--font-sans); font-size: 11px; color: var(--text-muted); display: block; margin-top: 4px; }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div><div class="mono timer">02:14:09</div><span class="tag">countdown</span></div>
+    <div><div class="mono count">🟢 2 · 🍗 1</div><span class="tag">vote counts</span></div>
+    <div><div class="mono qty">250 g · 4 pcs</div><span class="tag">inventory qty</span></div>
+  </div>
+</body>
+</html>

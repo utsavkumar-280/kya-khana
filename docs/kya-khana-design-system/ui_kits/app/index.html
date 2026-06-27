@@ -1,0 +1,81 @@
+<!-- @dsCard group="App" viewport="390x844" name="Kya Khana — App UI Kit" subtitle="Interactive 3-tab PWA: Dashboard, Inventory, More" -->
+<!-- @startingPoint section="App" subtitle="Full Kya Khana meal-planning PWA — 3-tab mobile app" viewport="390x844" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kya Khana — App</title>
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  html, body { margin: 0; height: 100%; }
+  body {
+    background: var(--neutral-100);
+    display: grid; place-items: center;
+    padding: 20px; box-sizing: border-box;
+    font-family: var(--font-sans);
+  }
+  .device {
+    width: 390px; height: 844px; position: relative;
+    background: var(--bg-app);
+    border-radius: 46px;
+    box-shadow: 0 36px 80px rgba(53,40,28,0.34), 0 0 0 11px #221A14, 0 0 0 13px #4A3A29;
+    overflow: hidden;
+    display: flex; flex-direction: column;
+  }
+  .statusbar {
+    height: 46px; flex-shrink: 0; display: flex; align-items: center; justify-content: space-between;
+    padding: 0 26px 0 30px; font-family: var(--font-display); font-weight: 700; font-size: 14px; color: var(--text-primary);
+  }
+  .statusbar .dots { display: flex; gap: 7px; align-items: center; }
+  .screen { flex: 1; min-height: 0; position: relative; }
+</style>
+</head>
+<body>
+  <div id="root"></div>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <script src="../../_ds_bundle.js"></script>
+  <script src="data.js"></script>
+  <script type="text/babel" src="Dashboard.jsx"></script>
+  <script type="text/babel" src="Inventory.jsx"></script>
+  <script type="text/babel" src="More.jsx"></script>
+  <script type="text/babel">
+    const { BottomNav } = window.KyaKhanaDesignSystem_6941ec;
+
+    function StatusBar() {
+      return (
+        <div className="statusbar">
+          <span className="kk-tabular">9:41</span>
+          <span className="dots">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#2A211B" strokeWidth="2.2"
+              strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 20h.01"/><path d="M8.5 16.5a5 5 0 0 1 7 0"/><path d="M5 13a10 10 0 0 1 14 0"/>
+            </svg>
+            <span className="kk-tabular" style={{ fontSize: 13 }}>100%</span>
+          </span>
+        </div>
+      );
+    }
+
+    function App() {
+      const [tab, setTab] = React.useState('dashboard');
+      const { Dashboard, Inventory, More } = window;
+      return (
+        <div className="device">
+          <StatusBar />
+          <div className="screen">
+            {tab === 'dashboard' && <Dashboard />}
+            {tab === 'inventory' && <Inventory />}
+            {tab === 'more' && <More />}
+          </div>
+          <BottomNav active={tab} onChange={setTab} />
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+/* ============================================================
+   Kya Khana — Webfonts
+   Display / wordmark / numeric : Plus Jakarta Sans (geometric, friendly;
+                                  tabular figures power countdowns & counts)
+   UI / body                    : Be Vietnam Pro (warm, legible grotesque)
+   Devanagari                   : Noto Sans Devanagari (क्या खाना + dish names)
+   Loaded from Google Fonts. Plus Jakarta Sans doubles as the numeric face —
+   the system no longer ships a monospace; numbers use tabular-nums instead.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Be+Vietnam+Pro:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@500;600;700&display=swap');
+
+:root {
+  --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-sans: 'Be Vietnam Pro', system-ui, -apple-system, sans-serif;
+  /* Numerics (countdowns, vote counts, quantities) use the display face with
+     tabular figures — kept under the --font-mono name for backwards-compat. */
+  --font-mono: 'Plus Jakarta Sans', system-ui, sans-serif;
+  /* Devanagari rides alongside Latin via a dedicated Hindi face */
+  --font-deva: 'Noto Sans Devanagari', 'Be Vietnam Pro', sans-serif;
+}

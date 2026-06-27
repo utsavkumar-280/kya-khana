@@ -1,0 +1,456 @@
+<!-- @dsCard group="Screens" viewport="430x880" name="Screen 1 — Dashboard" subtitle="Interactive 390×844 meal-voting dashboard with scroll = time" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kya Khana — Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --head: 'Plus Jakarta Sans', system-ui, sans-serif;
+    --body: 'Be Vietnam Pro', system-ui, sans-serif;
+    --bg: #FBF5EC;
+    --card: #FFFFFF;
+    --accent: #E65100;
+    --accent-soft: #FFF1E3;
+    --timer: #D84315;
+    --veg: #2E7D32;
+    --veg-bg: #E9F4EA;
+    --nonveg: #C62828;
+    --nonveg-bg: #FCEBEB;
+    --ink: #2A211B;
+    --muted: #8C8076;
+    --faint: #B6ABA0;
+    --line: #EDE3D6;
+    --radius-card: 22px;
+    --radius-inner: 16px;
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    background: #E7DDCD;
+    font-family: var(--body);
+    color: var(--ink);
+    display: grid; place-items: center;
+    padding: 18px;
+  }
+  .device {
+    width: 390px; height: 844px; position: relative;
+    background: var(--bg);
+    border-radius: 46px;
+    box-shadow: 0 36px 80px rgba(53,40,28,0.34), 0 0 0 11px #221A14, 0 0 0 13px #4A3A29;
+    overflow: hidden;
+    display: flex; flex-direction: column;
+  }
+  /* status bar */
+  .statusbar {
+    height: 46px; flex-shrink: 0; display: flex; align-items: center; justify-content: space-between;
+    padding: 0 26px 0 30px; font-family: var(--head); font-weight: 700; font-size: 14px; color: var(--ink);
+  }
+  .statusbar .right { display: flex; align-items: center; gap: 7px; }
+  /* header */
+  .appheader {
+    flex-shrink: 0; height: 62px; display: flex; align-items: center; justify-content: space-between;
+    padding: 0 18px; position: relative; z-index: 30;
+    background: linear-gradient(to bottom, var(--bg) 72%, rgba(251,245,236,0));
+  }
+  .wordmark { font-family: var(--head); font-weight: 800; font-size: 21px; letter-spacing: -0.03em; color: var(--accent); }
+  .wordmark .dash { color: var(--faint); font-weight: 600; }
+  .datebtn {
+    display: inline-flex; align-items: center; gap: 7px;
+    background: var(--card); border: 1px solid var(--line); border-radius: 999px;
+    padding: 8px 12px 8px 11px; cursor: pointer; box-shadow: 0 2px 7px rgba(53,40,28,0.06);
+    font-family: var(--head); font-weight: 700; font-size: 14px; color: var(--ink);
+  }
+  .datebtn svg { display: block; }
+  .chev { transition: transform .25s ease; }
+  .datebtn.open .chev { transform: rotate(180deg); }
+  /* scroll feed */
+  .feed {
+    flex: 1; min-height: 0; overflow-y: auto; padding: 6px 16px 22px; position: relative;
+    scroll-snap-type: y proximity; scroll-behavior: smooth;
+    display: flex; flex-direction: column; gap: 16px;
+  }
+  .feed::-webkit-scrollbar { width: 0; }
+  .snapwrap { scroll-snap-align: start; scroll-margin-top: 6px; }
+  /* hint */
+  .hint { text-align: center; font-size: 11.5px; color: var(--faint); font-weight: 500; padding: 2px 0 4px; }
+  /* generic card */
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-card); }
+  /* active card */
+  .active { box-shadow: 0 14px 34px rgba(230,81,0,0.16); border-color: #F6D9BE; }
+  .meal-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; padding: 16px 16px 12px; }
+  .meal-eyebrow { font-family: var(--head); font-size: 10.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 4px; }
+  .meal-title { font-family: var(--head); font-size: 21px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.05; }
+  .meal-title .hi { font-weight: 600; color: var(--faint); font-size: 15px; margin-left: 6px; }
+  .timer {
+    flex-shrink: 0; display: inline-flex; align-items: center; gap: 5px;
+    background: #FDEAE0; color: var(--timer); border-radius: 999px; padding: 7px 11px;
+    font-family: var(--head); font-weight: 800; font-size: 13px; white-space: nowrap;
+  }
+  .timer .pulse { width: 7px; height: 7px; border-radius: 50%; background: var(--timer); animation: pulse 1.6s ease-in-out infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.45;transform:scale(.7)} }
+  /* combos split */
+  .combos { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 0 14px 14px; }
+  .combo { display: flex; flex-direction: column; border: 1.5px solid var(--line); border-radius: var(--radius-inner); padding: 11px 11px 12px; background: #FFFDFB; transition: border-color .2s, background .2s; }
+  .combo.sel { border-color: var(--accent); background: var(--accent-soft); }
+  .combo-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 9px; }
+  .combo-tag { font-family: var(--head); font-size: 10px; font-weight: 800; letter-spacing: 0.08em; color: var(--muted); }
+  .combo.sel .combo-tag { color: var(--accent); }
+  .votes { display: inline-flex; align-items: center; gap: 4px; font-family: var(--head); font-weight: 700; font-size: 11px; color: var(--muted); }
+  .dishes { display: flex; flex-direction: column; gap: 7px; flex: 1; }
+  .dish { display: flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 500; line-height: 1.2; }
+  .dish .emoji { font-size: 14px; width: 17px; text-align: center; flex-shrink: 0; }
+  .dish .name { flex: 1; }
+  .pill { font-family: var(--head); font-size: 8.5px; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; padding: 2px 6px; border-radius: 999px; white-space: nowrap; }
+  .pill.veg { background: var(--veg-bg); color: var(--veg); }
+  .pill.nonveg { background: var(--nonveg-bg); color: var(--nonveg); }
+  .vegnote { display: flex; align-items: flex-start; gap: 5px; margin-top: 9px; padding: 7px 8px; background: var(--veg-bg); border: 1px dashed #A6CFA8; border-radius: 11px; font-size: 11px; color: var(--veg); line-height: 1.3; }
+  .vegnote b { font-weight: 700; }
+  .votebtn {
+    margin-top: 11px; width: 100%; border: none; cursor: pointer; border-radius: 12px;
+    padding: 11px 0; font-family: var(--head); font-weight: 700; font-size: 14px;
+    background: #FBEFE3; color: var(--accent); transition: transform .12s, background .2s, color .2s;
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  }
+  .votebtn:active { transform: scale(0.96); }
+  .combo.sel .votebtn { background: var(--accent); color: #fff; }
+  /* locked card */
+  .locked { position: relative; opacity: 0.62; }
+  .locked .meal-eyebrow { color: var(--muted); }
+  .lockrow { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px 10px; }
+  .lockbadge { display: inline-flex; align-items: center; gap: 5px; background: #EFE7DB; color: var(--muted); border-radius: 999px; padding: 5px 9px; font-family: var(--head); font-weight: 700; font-size: 11px; }
+  .preview { padding: 0 16px 12px; }
+  .preview-label { font-size: 10.5px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--faint); margin-bottom: 5px; font-family: var(--head); }
+  .preview-dishes { font-size: 13px; color: var(--muted); line-height: 1.45; }
+  .lockedbtn { margin: 0 16px 14px; display: flex; align-items: center; justify-content: center; gap: 6px; padding: 10px; border-radius: 12px; background: #F0E8DC; color: var(--faint); font-family: var(--head); font-weight: 700; font-size: 13px; }
+  /* decided card */
+  .decided { background: #FAF4EB; }
+  .decided .meal-title { color: var(--muted); }
+  .decrow { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px 8px; }
+  .donebadge { display: inline-flex; align-items: center; gap: 5px; background: var(--veg-bg); color: var(--veg); border-radius: 999px; padding: 5px 9px; font-family: var(--head); font-weight: 800; font-size: 11px; }
+  .result { padding: 0 16px 16px; }
+  .result-label { font-size: 10.5px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--faint); margin-bottom: 6px; font-family: var(--head); }
+  .result-dishes { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip { display: inline-flex; align-items: center; gap: 5px; background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 6px 9px; font-size: 12.5px; font-weight: 500; color: var(--ink); }
+  /* bottom nav */
+  .nav {
+    flex-shrink: 0; height: 78px; display: flex; align-items: stretch; padding: 8px 14px 16px;
+    background: #fff; border-top: 1px solid var(--line); box-shadow: 0 -3px 18px rgba(53,40,28,0.07);
+  }
+  .navbtn { flex: 1; border: none; background: transparent; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; color: var(--faint); font-family: var(--head); font-weight: 700; font-size: 11px; }
+  .navbtn.on { color: var(--accent); }
+  .navbtn .ico { display: grid; place-items: center; width: 56px; height: 34px; border-radius: 999px; transition: background .2s; }
+  .navbtn.on .ico { background: var(--accent-soft); }
+  /* date popover */
+  .pop-scrim { position: absolute; inset: 0; z-index: 25; background: rgba(42,33,27,0.18); }
+  .popover {
+    position: absolute; top: 102px; right: 18px; z-index: 31; width: 210px;
+    background: #fff; border: 1px solid var(--line); border-radius: 18px; box-shadow: 0 18px 44px rgba(53,40,28,0.22);
+    padding: 8px; transform-origin: top right;
+    transition: transform .2s cubic-bezier(0.16,1,0.3,1);
+  }
+  .pop-title { font-family: var(--head); font-weight: 800; font-size: 12px; color: var(--muted); padding: 6px 8px 8px; }
+  .pop-item { display: flex; align-items: center; gap: 10px; width: 100%; border: none; background: transparent; cursor: pointer; padding: 11px 10px; border-radius: 12px; font-family: var(--head); font-weight: 700; font-size: 14px; color: var(--ink); text-align: left; }
+  .pop-item:hover { background: var(--bg); }
+  .pop-item.cur { background: var(--accent); color: #fff; }
+  .pop-item .pd { margin-left: auto; font-size: 11px; font-weight: 600; color: var(--faint); }
+  .pop-item.cur .pd { color: rgba(255,255,255,0.8); }
+</style>
+</head>
+<body>
+  <div id="root"></div>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <script type="text/babel">
+    const { useState, useRef, useEffect, useLayoutEffect, useCallback } = React;
+
+    /* ---------- inline line icons (Lucide geometry) ---------- */
+    const Ico = ({ d, s = 22, sw = 2, c = 'currentColor' }) => (
+      <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth={sw}
+        strokeLinecap="round" strokeLinejoin="round" dangerouslySetInnerHTML={{ __html: d }} />
+    );
+    const I = {
+      home: '<path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/>',
+      box: '<path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z"/><path d="M12 22V12"/><path d="m3.3 7 8.7 5 8.7-5"/>',
+      more: '<path d="M20 7h-9"/><path d="M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/>',
+      cal: '<path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/>',
+      chev: '<path d="m6 9 6 6 6-6"/>',
+      lock: '<rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',
+      check: '<path d="M20 6 9 17l-5-5"/>',
+      wifi: '<path d="M12 20h.01"/><path d="M8.5 16.5a5 5 0 0 1 7 0"/><path d="M5 13a10 10 0 0 1 14 0"/>',
+    };
+
+    /* ---------- data ---------- */
+    const ACTIVE_COMBOS = {
+      A: { tag: 'COMBO A', glyph: '🟢', votes: 2, dishes: [
+        { e: '🍚', n: 'Jeera Rice' },
+        { e: '🍗', n: 'Butter Chicken', diet: 'nonveg' },
+        { e: '🫘', n: 'Dal Tadka' },
+        { e: '🥗', n: 'Green Salad' },
+      ], vegNote: 'Paneer Butter Masala' },
+      B: { tag: 'COMBO B', glyph: '🍗', votes: 1, dishes: [
+        { e: '🫓', n: 'Wheat Roti' },
+        { e: '🌿', n: 'Palak Paneer', diet: 'veg' },
+        { e: '🫘', n: 'Dal Makhani' },
+        { e: '🥒', n: 'Boondi Raita' },
+      ] },
+    };
+
+    const FEED = [
+      { id: 'tmr-lunch', day: 'Tomorrow', state: 'locked', eyebrow: 'Tomorrow · Afternoon',
+        title: 'Tomorrow Lunch', hi: 'दोपहर', preview: 'Bajra Roti · Baingan Bharta · Moong Dal · Cucumber Raita' },
+      { id: 'tmr-bfast', day: 'Tomorrow', state: 'locked', eyebrow: 'Tomorrow · Morning',
+        title: 'Tomorrow Breakfast', hi: 'नाश्ता', preview: 'Masala Omelette · Bread Toast' },
+      { id: 'tonight', day: 'Today', state: 'active', eyebrow: 'Today · Evening',
+        title: "Tonight's Dinner", hi: 'रात का खाना' },
+      { id: 'yest-eve', day: 'Yesterday', state: 'decided', eyebrow: 'Yesterday · Evening',
+        title: 'Yesterday Evening', result: [
+          { e: '🫓', n: 'Wheat Roti' }, { e: '🍗', n: 'Chicken Curry' }, { e: '🫘', n: 'Dal Tadka' }, { e: '🥗', n: 'Green Salad' } ] },
+      { id: 'yest-morn', day: 'Yesterday', state: 'decided', eyebrow: 'Yesterday · Morning',
+        title: 'Yesterday Morning', result: [
+          { e: '🍥', n: 'Idli' }, { e: '🍲', n: 'Sambar' }, { e: '🥥', n: 'Coconut Chutney' } ] },
+    ];
+
+    const DATE_META = {
+      Tomorrow: 'Fri, 12 Jun', Today: 'Thu, 11 Jun', Yesterday: 'Wed, 10 Jun',
+    };
+
+    /* ---------- countdown ---------- */
+    function useCountdown(startSec) {
+      const [sec, setSec] = useState(startSec);
+      useEffect(() => {
+        const id = setInterval(() => setSec((s) => (s > 0 ? s - 1 : 0)), 1000);
+        return () => clearInterval(id);
+      }, []);
+      const h = Math.floor(sec / 3600);
+      const m = Math.floor((sec % 3600) / 60);
+      return `${h}h ${String(m).padStart(2, '0')}m left`;
+    }
+
+    /* ---------- combo column ---------- */
+    function Combo({ data, side, selected, onVote }) {
+      return (
+        <div className={'combo' + (selected ? ' sel' : '')}>
+          <div className="combo-head">
+            <span className="combo-tag">{data.tag}</span>
+            <span className="votes">{data.glyph} {data.votes}</span>
+          </div>
+          <div className="dishes">
+            {data.dishes.map((d, i) => (
+              <div className="dish" key={i}>
+                <span className="emoji">{d.e}</span>
+                <span className="name">{d.n}</span>
+                {d.diet && <span className={'pill ' + d.diet}>{d.diet === 'veg' ? 'Veg' : 'Non-Veg'}</span>}
+              </div>
+            ))}
+          </div>
+          {data.vegNote && (
+            <div className="vegnote">
+              <span>🌿</span>
+              <span><b>Veg:</b> {data.vegNote}</span>
+            </div>
+          )}
+          <button className="votebtn" onClick={onVote}>
+            {selected ? <><Ico d={I.check} s={16} sw={2.6} /> Voted {side}</> : `Vote ${side}`}
+          </button>
+        </div>
+      );
+    }
+
+    /* ---------- active meal card ---------- */
+    function ActiveCard() {
+      const [vote, setVote] = useState(null);
+      const label = useCountdown(3 * 3600 + 12 * 60);
+      const a = { ...ACTIVE_COMBOS.A, votes: ACTIVE_COMBOS.A.votes + (vote === 'A' ? 1 : 0) };
+      const b = { ...ACTIVE_COMBOS.B, votes: ACTIVE_COMBOS.B.votes + (vote === 'B' ? 1 : 0) };
+      return (
+        <div className="card active">
+          <div className="meal-top">
+            <div>
+              <div className="meal-eyebrow">Today · Evening</div>
+              <div className="meal-title">Tonight's Dinner<span className="hi">रात का खाना</span></div>
+            </div>
+            <div className="timer"><span className="pulse" />{label}</div>
+          </div>
+          <div className="combos">
+            <Combo data={a} side="A" selected={vote === 'A'} onVote={() => setVote('A')} />
+            <Combo data={b} side="B" selected={vote === 'B'} onVote={() => setVote('B')} />
+          </div>
+        </div>
+      );
+    }
+
+    /* ---------- locked card ---------- */
+    function LockedCard({ m }) {
+      return (
+        <div className="card locked">
+          <div className="lockrow">
+            <div>
+              <div className="meal-eyebrow">{m.eyebrow}</div>
+              <div className="meal-title">{m.title}<span className="hi">{m.hi}</span></div>
+            </div>
+            <span className="lockbadge"><Ico d={I.lock} s={13} /> Locked</span>
+          </div>
+          <div className="preview">
+            <div className="preview-label">Preview</div>
+            <div className="preview-dishes">{m.preview}</div>
+          </div>
+          <div className="lockedbtn"><Ico d={I.lock} s={14} /> Voting opens soon</div>
+        </div>
+      );
+    }
+
+    /* ---------- decided card ---------- */
+    function DecidedCard({ m }) {
+      return (
+        <div className="card decided">
+          <div className="decrow">
+            <div>
+              <div className="meal-eyebrow">{m.eyebrow}</div>
+              <div className="meal-title">{m.title}</div>
+            </div>
+            <span className="donebadge"><Ico d={I.check} s={13} sw={2.8} /> Decided</span>
+          </div>
+          <div className="result">
+            <div className="result-label">What we ate</div>
+            <div className="result-dishes">
+              {m.result.map((d, i) => (
+                <span className="chip" key={i}><span>{d.e}</span>{d.n}</span>
+              ))}
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    /* ---------- app ---------- */
+    function App() {
+      const [tab, setTab] = useState('dashboard');
+      const [day, setDay] = useState('Today');
+      const [popOpen, setPopOpen] = useState(false);
+      const feedRef = useRef(null);
+      const refs = useRef({});
+
+      // open scrolled to the active (Today) card — before first paint
+      useLayoutEffect(() => {
+        const scrollToActive = () => {
+          const el = refs.current['tonight'];
+          const feed = feedRef.current;
+          if (el && feed) {
+            const top = el.getBoundingClientRect().top - feed.getBoundingClientRect().top + feed.scrollTop - 6;
+            feed.style.scrollBehavior = 'auto';
+            feed.scrollTop = top;
+            feed.style.scrollBehavior = '';
+          }
+        };
+        scrollToActive();
+        if (document.fonts && document.fonts.ready) document.fonts.ready.then(scrollToActive);
+      }, []);
+
+      // header date follows the card snapped near the top
+      useEffect(() => {
+        const feed = feedRef.current;
+        if (!feed) return;
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              const d = e.target.getAttribute('data-day');
+              if (d) setDay(d);
+            }
+          });
+        }, { root: feed, rootMargin: '0px 0px -78% 0px', threshold: 0 });
+        Object.values(refs.current).forEach((el) => el && io.observe(el));
+        return () => io.disconnect();
+      }, []);
+
+      const jumpTo = useCallback((targetDay) => {
+        const target = FEED.find((m) => m.day === targetDay);
+        const el = target && refs.current[target.id];
+        const feed = feedRef.current;
+        if (el && feed) {
+          const top = el.getBoundingClientRect().top - feed.getBoundingClientRect().top + feed.scrollTop - 6;
+          feed.scrollTo({ top, behavior: 'smooth' });
+        }
+        setPopOpen(false);
+      }, []);
+
+      return (
+        <div className="device">
+          {/* status bar */}
+          <div className="statusbar">
+            <span>9:41</span>
+            <span className="right">
+              <Ico d={I.wifi} s={16} sw={2.2} c="#2A211B" />
+              <span style={{ fontSize: 13 }}>100%</span>
+            </span>
+          </div>
+
+          {/* header */}
+          <div className="appheader">
+            <span className="wordmark">kya<span className="dash">-</span>khana</span>
+            <button className={'datebtn' + (popOpen ? ' open' : '')} onClick={() => setPopOpen((o) => !o)}>
+              <Ico d={I.cal} s={17} c="var(--accent)" />
+              {day}
+              <Ico d={I.chev} s={16} c="var(--faint)" />
+            </button>
+          </div>
+
+          {/* feed */}
+          <div className="feed" ref={feedRef}>
+            <div className="hint">↑ swipe up for upcoming days</div>
+            {FEED.map((m) => (
+              <div className="snapwrap" key={m.id} data-day={m.day}
+                ref={(el) => { refs.current[m.id] = el; }}>
+                {m.state === 'active' && <ActiveCard />}
+                {m.state === 'locked' && <LockedCard m={m} />}
+                {m.state === 'decided' && <DecidedCard m={m} />}
+              </div>
+            ))}
+            <div className="hint">that's the start of your history ✦</div>
+          </div>
+
+          {/* date popover */}
+          <div className={'pop-scrim' + (popOpen ? ' open' : '')}
+            style={{ opacity: popOpen ? 1 : 0, pointerEvents: popOpen ? 'auto' : 'none' }}
+            onClick={() => setPopOpen(false)} />
+          <div className={'popover' + (popOpen ? ' open' : '')}
+            style={{
+              opacity: popOpen ? 1 : 0,
+              transform: popOpen ? 'translateY(0) scale(1)' : 'translateY(-8px) scale(0.97)',
+              pointerEvents: popOpen ? 'auto' : 'none',
+            }}>
+            <div className="pop-title">JUMP TO A DAY</div>
+            {['Tomorrow', 'Today', 'Yesterday'].map((d) => (
+              <button key={d} className={'pop-item' + (d === day ? ' cur' : '')} onClick={() => jumpTo(d)}>
+                <Ico d={I.cal} s={16} c={d === day ? '#fff' : 'var(--accent)'} />
+                {d}
+                <span className="pd">{DATE_META[d]}</span>
+              </button>
+            ))}
+          </div>
+
+          {/* bottom nav */}
+          <div className="nav">
+            <button className={'navbtn' + (tab === 'inventory' ? ' on' : '')} onClick={() => setTab('inventory')}>
+              <span className="ico"><Ico d={I.box} s={22} /></span>Inventory
+            </button>
+            <button className={'navbtn' + (tab === 'dashboard' ? ' on' : '')} onClick={() => setTab('dashboard')}>
+              <span className="ico"><Ico d={I.home} s={22} sw={tab === 'dashboard' ? 2.4 : 2} /></span>Dashboard
+            </button>
+            <button className={'navbtn' + (tab === 'more' ? ' on' : '')} onClick={() => setTab('more')}>
+              <span className="ico"><Ico d={I.more} s={22} /></span>More
+            </button>
+          </div>
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>

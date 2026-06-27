@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Kya Khana — Design System Gallery</title>
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family:
+          "Be Vietnam Pro",
+          system-ui,
+          -apple-system,
+          sans-serif;
+        background: #fbf5ec;
+        color: #2a211b;
+        padding: 32px 24px;
+        min-height: 100vh;
+      }
+
+      /* ── Header ── */
+      header {
+        max-width: 1200px;
+        margin: 0 auto 40px;
+        text-align: center;
+      }
+      header .wordmark {
+        font-family: "Plus Jakarta Sans", "Noto Sans Devanagari", sans-serif;
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: #e65100;
+        letter-spacing: -0.02em;
+        line-height: 1.1;
+        margin-bottom: 8px;
+      }
+      header .subtitle {
+        font-size: 1.0625rem;
+        color: #8c8076;
+        font-weight: 400;
+      }
+      header .meta {
+        margin-top: 12px;
+        display: flex;
+        justify-content: center;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+      header .meta span {
+        font-size: 0.8125rem;
+        color: #6e635a;
+        background: #ede3d6;
+        padding: 4px 12px;
+        border-radius: 999px;
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-weight: 600;
+      }
+
+      /* ── Nav ── */
+      nav {
+        max-width: 1100px;
+        margin: 0 auto 32px;
+        display: flex;
+        justify-content: center;
+        gap: 6px;
+        flex-wrap: wrap;
+      }
+      nav button {
+        font-family: "Be Vietnam Pro", sans-serif;
+        font-size: 0.8125rem;
+        font-weight: 600;
+        padding: 8px 18px;
+        border-radius: 999px;
+        border: 1.5px solid #ede3d6;
+        background: #ffffff;
+        color: #6e635a;
+        cursor: pointer;
+        transition: all 140ms ease;
+      }
+      nav button:hover {
+        background: #ffe0c4;
+        border-color: #ffc392;
+      }
+      nav button.active {
+        background: #e65100;
+        color: #ffffff;
+        border-color: #e65100;
+      }
+
+      /* ── Gallery grid ── */
+      .gallery {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+        gap: 24px;
+      }
+      .card-wrap {
+        background: #ffffff;
+        border-radius: 22px;
+        box-shadow: 0 6px 16px rgba(56, 45, 33, 0.1);
+        overflow: hidden;
+        border: 1px solid #ede3d6;
+        transition: box-shadow 240ms ease;
+      }
+      .card-wrap:hover {
+        box-shadow: 0 14px 34px rgba(230, 81, 0, 0.16);
+        border-color: #ffc392;
+      }
+      .card-label {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 20px;
+        background: #ffffff;
+        border-bottom: 1px solid #ede3d6;
+      }
+      .card-label .name {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 0.9375rem;
+        font-weight: 700;
+        color: #2a211b;
+      }
+      .card-label .sub {
+        font-size: 0.75rem;
+        color: #8c8076;
+        font-weight: 500;
+        background: #f4ece0;
+        padding: 3px 10px;
+        border-radius: 999px;
+      }
+      .card-frame {
+        width: 100%;
+        border: none;
+        display: block;
+        background: #fbf5ec;
+      }
+
+      /* ── Fullscreen overlay ── */
+      .overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(42, 33, 27, 0.18);
+        z-index: 100;
+        justify-content: center;
+        align-items: center;
+        padding: 24px;
+      }
+      .overlay.open {
+        display: flex;
+      }
+      .overlay-inner {
+        background: #ffffff;
+        border-radius: 22px;
+        box-shadow: 0 14px 34px rgba(230, 81, 0, 0.16);
+        width: 100%;
+        max-width: 850px;
+        max-height: 90vh;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+      .overlay-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 20px;
+        border-bottom: 1px solid #ede3d6;
+        flex-shrink: 0;
+      }
+      .overlay-header .name {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 1.0625rem;
+        font-weight: 700;
+      }
+      .overlay-close {
+        font-size: 1.25rem;
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: #8c8076;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        transition: background 140ms;
+      }
+      .overlay-close:hover {
+        background: #f4ece0;
+      }
+      .overlay-frame {
+        flex: 1;
+        border: none;
+        display: block;
+        background: #fbf5ec;
+        width: 100%;
+      }
+
+      /* ── Empty ── */
+      .empty {
+        grid-column: 1 / -1;
+        text-align: center;
+        padding: 60px 20px;
+        color: #8c8076;
+        font-size: 1.0625rem;
+      }
+
+      @media (max-width: 600px) {
+        body {
+          padding: 16px 12px;
+        }
+        .gallery {
+          grid-template-columns: 1fr;
+        }
+        header .wordmark {
+          font-size: 1.875rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="wordmark">Kya Khana · क्या खाना</div>
+      <div class="subtitle">
+        Design System — Brand Guidelines, Components &amp; Screens
+      </div>
+      <div class="meta" id="meta"></div>
+    </header>
+
+    <nav id="nav"></nav>
+
+    <div class="gallery" id="gallery"></div>
+
+    <div class="overlay" id="overlay" onclick="closeOverlay(event)">
+      <div class="overlay-inner">
+        <div class="overlay-header">
+          <span class="name" id="overlayName"></span>
+          <button
+            class="overlay-close"
+            onclick="
+              document.getElementById('overlay').classList.remove('open')
+            "
+          >
+            ✕
+          </button>
+        </div>
+        <iframe class="overlay-frame" id="overlayFrame"></iframe>
+      </div>
+    </div>
+
+    <script>
+      (async () => {
+        const res = await fetch("_ds_manifest.json");
+        const manifest = await res.json();
+
+        // Group cards
+        const groups = {};
+        for (const card of manifest.cards) {
+          if (!groups[card.group]) groups[card.group] = [];
+          groups[card.group].push(card);
+        }
+
+        const groupOrder = [
+          "App",
+          "Brand",
+          "Colors",
+          "Type",
+          "Spacing",
+          "Components",
+          "Screens",
+        ];
+        const sortedGroups = Object.keys(groups).sort((a, b) => {
+          const ai = groupOrder.indexOf(a),
+            bi = groupOrder.indexOf(b);
+          if (ai === -1 && bi === -1) return a.localeCompare(b);
+          if (ai === -1) return 1;
+          if (bi === -1) return -1;
+          return ai - bi;
+        });
+
+        // Meta
+        document.getElementById("meta").innerHTML = `
+    <span>${manifest.components.length} components</span>
+    <span>${manifest.tokens.length} tokens</span>
+    <span>${manifest.cards.length} cards</span>
+    <span>3 brand fonts</span>
+    <span>390px PWA</span>
+  `;
+
+        // Nav
+        const nav = document.getElementById("nav");
+        const allBtn = document.createElement("button");
+        allBtn.textContent = "All";
+        allBtn.className = "active";
+        allBtn.onclick = () => {
+          renderAll(groups, sortedGroups);
+          setActive(allBtn);
+        };
+        nav.appendChild(allBtn);
+        for (const g of sortedGroups) {
+          const btn = document.createElement("button");
+          btn.textContent = g;
+          btn.onclick = () => {
+            renderGroup(groups[g], g);
+            setActive(btn);
+          };
+          nav.appendChild(btn);
+        }
+        function setActive(btn) {
+          document
+            .querySelectorAll("nav button")
+            .forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+        }
+
+        function cardHTML(card) {
+          const aspect = card.viewport
+            ? parseInt(card.viewport.split("x")[1]) /
+              parseInt(card.viewport.split("x")[0])
+            : 0.6;
+          const h = Math.round(360 * aspect);
+          return `
+      <div class="card-wrap" onclick="openOverlay('${card.path}', '${card.name}')">
+        <div class="card-label">
+          <span class="name">${card.name}</span>
+          <span class="sub">${card.subtitle || ""}</span>
+        </div>
+        <iframe class="card-frame" src="${card.path}" style="height:${h}px" loading="lazy"></iframe>
+      </div>`;
+        }
+
+        function renderAll(groups, sortedGroups) {
+          const gallery = document.getElementById("gallery");
+          let html = "";
+          for (const g of sortedGroups) {
+            html += `<h2 style="grid-column:1/-1;font-family:'Plus Jakarta Sans',sans-serif;font-size:1.25rem;font-weight:700;color:#E65100;margin-top:8px">${g}</h2>`;
+            html += groups[g].map(cardHTML).join("");
+          }
+          gallery.innerHTML = html;
+        }
+
+        function renderGroup(cards, groupName) {
+          const gallery = document.getElementById("gallery");
+          if (cards.length === 0) {
+            gallery.innerHTML =
+              '<div class="empty">No cards in this group.</div>';
+            return;
+          }
+          gallery.innerHTML =
+            `<h2 style="grid-column:1/-1;font-family:'Plus Jakarta Sans',sans-serif;font-size:1.25rem;font-weight:700;color:#E65100;margin-top:8px">${groupName}</h2>` +
+            cards.map(cardHTML).join("");
+        }
+
+        renderAll(groups, sortedGroups);
+      })();
+
+      function openOverlay(path, name) {
+        document.getElementById("overlayName").textContent = name;
+        document.getElementById("overlayFrame").src = path;
+        document.getElementById("overlay").classList.add("open");
+      }
+
+      function closeOverlay(e) {
+        if (e.target === e.currentTarget) {
+          document.getElementById("overlay").classList.remove("open");
+          document.getElementById("overlayFrame").src = "";
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,61 @@
+/* ============================================================
+   Kya Khana — Base resets & primitives
+   Minimal, opinionated resets that establish the warm canvas
+   and default type. Kept light so consumers can layer freely.
+   ============================================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--text-md);
+  line-height: var(--leading-normal);
+  color: var(--text-primary);
+  background: var(--bg-app);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-snug);
+}
+
+p { margin: 0; }
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+/* Numeric helper — countdowns, vote counts, quantities */
+.kk-tabular {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+/* The wordmark — क्या खाना */
+.kk-wordmark {
+  font-family: var(--font-display);
+  font-weight: var(--weight-extrabold);
+  letter-spacing: var(--tracking-tight);
+  color: var(--text-brand);
+}
+
+::selection {
+  background: var(--saffron-200);
+  color: var(--neutral-900);
+}
+
+/* Live-timer pulse dot (active meal card countdown pill) */
+@keyframes kk-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.4; transform: scale(0.65); }
+}

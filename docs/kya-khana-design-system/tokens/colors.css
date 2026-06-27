@@ -1,0 +1,132 @@
+/* ============================================================
+   Kya Khana — Color tokens
+   A warm, appetizing North-Indian kitchen palette. The primary action is a
+   deep turmeric-orange; masala brick is a secondary brand accent. Fresh herb
+   green and chili red carry veg / non-veg and success / danger, all grounded
+   on warm taupe-tinted cream neutrals (never cool grey).
+   ============================================================ */
+
+:root {
+  /* ---- Saffron / Turmeric-orange (primary brand & action) ---- */
+  --saffron-50:  #FFF1E3;
+  --saffron-100: #FFE0C4;
+  --saffron-200: #FFC392;
+  --saffron-300: #FBA15C;
+  --saffron-400: #F47E2E;
+  --saffron-500: #E65100;  /* primary action */
+  --saffron-600: #CC4710;
+  --saffron-700: #A63A10;
+  --saffron-800: #842F12;
+  --saffron-900: #6B2811;
+
+  /* ---- Masala / Brick (secondary brand accent — themes, alt voting) ---- */
+  --masala-50:  #FAEDEA;
+  --masala-100: #F2D2CB;
+  --masala-300: #D98A7C;
+  --masala-500: #B23A2E;
+  --masala-600: #95291F;
+  --masala-700: #76211A;
+
+  /* ---- Herb green (vegetarian / success) ---- */
+  --veg-50:  #E9F4EA;
+  --veg-100: #CDE7CF;
+  --veg-300: #7FB983;
+  --veg-500: #2E7D32;
+  --veg-600: #266B2A;
+  --veg-700: #1F5722;
+
+  /* ---- Chili red (non-vegetarian / danger) ---- */
+  --nonveg-50:  #FCEBEB;
+  --nonveg-100: #F4CFCF;
+  --nonveg-300: #E08585;
+  --nonveg-500: #C62828;
+  --nonveg-600: #A91F1F;
+  --nonveg-700: #861818;
+
+  /* ---- Turmeric yellow (highlight / vote / timer warn) ---- */
+  --turmeric-300: #F6CE5C;
+  --turmeric-400: #F0B82E;
+  --turmeric-500: #E0A012;
+
+  /* ---- Warm neutrals (taupe-grey tinted) ---- */
+  --neutral-0:   #FFFFFF;
+  --cream:       #FBF5EC;  /* app background */
+  --neutral-50:  #F4ECE0;
+  --neutral-100: #EDE3D6;  /* hairline borders / dividers */
+  --neutral-200: #DDCFBE;
+  --neutral-300: #C7B8A6;
+  --neutral-400: #B6ABA0;  /* faint — placeholders, disabled */
+  --neutral-500: #8C8076;  /* muted — secondary text */
+  --neutral-600: #6E635A;
+  --neutral-700: #4E453D;
+  --neutral-800: #382F28;
+  --neutral-900: #2A211B;  /* ink — primary text */
+
+  /* ============================================================
+     Semantic aliases
+     ============================================================ */
+
+  /* Surfaces & backgrounds */
+  --bg-app:        var(--cream);
+  --surface-card:  var(--neutral-0);
+  --surface-sunken: var(--cream);
+  --surface-raised: var(--neutral-0);
+  --overlay-scrim: rgba(42, 33, 27, 0.18);
+
+  /* Text */
+  --text-primary:   var(--neutral-900);
+  --text-secondary: var(--neutral-500);
+  --text-muted:     var(--neutral-400);
+  --text-inverse:   var(--neutral-0);
+  --text-brand:     var(--saffron-500);
+
+  /* Borders & dividers */
+  --border:       var(--neutral-100);
+  --border-strong: var(--neutral-200);
+  --border-focus: var(--saffron-500);
+
+  /* Primary action */
+  --primary:         var(--saffron-500);
+  --primary-hover:   var(--saffron-600);
+  --primary-pressed: var(--saffron-700);
+  --primary-soft:    var(--saffron-50);
+  --on-primary:      var(--neutral-0);
+
+  /* Accent — collapsed onto the orange primary (eyebrows, section heads,
+     active tabs all share one warm orange). Masala brick lives on as the
+     secondary brand color above. */
+  --accent:        var(--saffron-500);
+  --accent-soft:   var(--saffron-50);
+  --accent-brick:  var(--masala-500);
+
+  /* Veg / Non-veg semantics */
+  --veg:        var(--veg-500);
+  --veg-bg:     var(--veg-50);
+  --veg-border: var(--veg-100);
+  --nonveg:        var(--nonveg-500);
+  --nonveg-bg:     var(--nonveg-50);
+  --nonveg-border: var(--nonveg-100);
+
+  /* Meal-card states */
+  --state-active:  var(--saffron-500);
+  --state-locked:  var(--neutral-400);
+  --state-decided: var(--veg-600);
+
+  /* Live countdown / urgency (active card timer pill) */
+  --timer:     #D84315;
+  --timer-bg:  #FDEAE0;
+
+  /* WhatsApp share action */
+  --whatsapp:    #1FAF54;
+  --whatsapp-bg: #E7F7EE;
+
+  /* Feedback */
+  --success: var(--veg-600);
+  --success-bg: var(--veg-50);
+  --warning: var(--turmeric-500);
+  --warning-bg: #FCF3DC;
+  --danger:  var(--nonveg-600);
+  --danger-bg: var(--nonveg-50);
+  --info:    #2F6FB0;
+  --info-bg: #E6EFF7;
+}
