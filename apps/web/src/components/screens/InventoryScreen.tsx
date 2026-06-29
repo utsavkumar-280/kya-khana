@@ -34,7 +34,7 @@ export function InventoryScreen() {
 	};
 
 	return (
-		<>
+		<div className="flex-1 min-h-0 flex flex-col">
 			{/* Toggle bar */}
 			<div className="toggle-wrap">
 				<div className="toggle-track">
@@ -165,6 +165,6 @@ export function InventoryScreen() {
 					)}
 				</div>
 			)}
-		</>
+		</div>
 	);
 }

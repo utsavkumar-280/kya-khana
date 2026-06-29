@@ -42,6 +42,8 @@
 
 /* BASE */
 body {
+  margin: 0;
+  min-height: 100dvh;
   background: var(--color-bg);
   color: var(--color-ink);
   font-family: var(--font-sans);
@@ -197,11 +199,16 @@ body {
 
 /* ========== BOTTOM NAV ========== */
 .bottomnav {
-  flex-shrink: 0; display: flex; align-items: stretch;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 72px;
+  display: flex; align-items: stretch;
   padding: 8px 14px 16px; background: #FFFFFF;
   border-top: 1px solid #EDE3D6;
   box-shadow: 0 -3px 18px rgba(53,40,28,0.07);
-  z-index: 30;
+  z-index: 40;
 }
 .navbtn {
   flex: 1; border: none; background: transparent; cursor: pointer;
@@ -242,7 +249,7 @@ body {
 .toggle-btn-on .toggle-count { background: rgba(255,255,255,0.25); }
 
 /* ========== INVENTORY STOCK ========== */
-.stock-scroll { overflow-y: auto; padding: 0 16px 22px; }
+.stock-scroll { flex: 1; min-height: 0; overflow-y: auto; padding: 0 16px 72px; }
 .seclabel {
   font-family: var(--font-display); font-size: 11px; font-weight: 800;
   letter-spacing: 0.1em; text-transform: uppercase; color: #8C8076;
@@ -299,7 +306,7 @@ body {
 .whatsapp-btn:active { transform: scale(0.97); }
 
 /* ========== MORE SCREEN ========== */
-.more-scroll { flex: 1; min-height: 0; overflow-y: auto; padding: 4px 16px 22px; display: flex; flex-direction: column; gap: 10px; }
+.more-scroll { flex: 1; min-height: 0; overflow-y: auto; padding: 4px 16px 72px; display: flex; flex-direction: column; gap: 10px; }
 .profile-card {
   display: flex; align-items: center; gap: 13px;
   background: #FFFFFF; border: 1px solid #EDE3D6; border-radius: 22px;
