@@ -204,24 +204,39 @@ Logout: color #C62828, margin-top 12px, font-weight 600
 
 ---
 
-## 4. Pre-Editing Checklist
+## 4. Missing Screens Fallback
+
+When a page has **no corresponding DS screen HTML** (e.g., welcome, login, signup, forgot-password):
+
+1. Read the **closest existing DS screen** and derive layout rhythm, surface styling, and spacing patterns from it:
+   - **Dashboard.html** → card layouts, feed spacing, eyebrow/title patterns
+   - **More.html** → form inputs, profile cards, menu items, centered auth patterns
+   - **Inventory.html** → toggle bars, list rows, bottom-aligned actions
+2. Apply the exact **token table values** for colors, fonts, shadows, borders.
+3. **STOP and ask the user a specific question** if anything is unclear: layout structure, spacing between elements, illustration/container size, form field arrangement, or any component shape not covered by existing screens.
+4. **Never default to** generic white backgrounds, system fonts, grey shadows, or untailored spacing.
+
+## 5. Pre-Editing Checklist
 
 Before editing ANY UI file, confirm:
 
 - [ ] Read the relevant DS screen HTML file (Dashboard.html, Inventory.html, More.html)
+- [ ] If no screen exists, read the **closest existing screen** and state which patterns will be derived from it
 - [ ] Colors come from the token table above (no ad-hoc hex values)
 - [ ] Shadows are warm brown, never grey/black
 - [ ] Font weights match DS (Plus Jakarta Sans 700-800 for headings, Be Vietnam Pro 400-600 for body)
 - [ ] Border is always warm `#EDE3D6`
 - [ ] Spacing uses 4px grid
 - [ ] No cool-grey anywhere — warm taupe only
+- [ ] If uncertain about layout or spacing for a missing screen — **ask the user before writing code**
 
 ---
 
-## 5. Post-Editing Validation
+## 6. Post-Editing Validation
 
 After editing UI, verify:
 
 - `pnpm turbo run typecheck` passes
 - `pnpm turbo run build --filter=@kya-khana/web` passes
 - Visual matches the DS screen HTML files
+- For missing screens: every value traces back to either (a) an existing screen's pattern or (b) the token table
