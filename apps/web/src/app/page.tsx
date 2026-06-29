@@ -4,7 +4,6 @@ import { Suspense, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { authClient } from "@/lib/auth";
 import { api } from "@/lib/api";
-import { useRevealDev } from "@/lib/hooks";
 import { AppHeader } from "@/components/ui/AppHeader";
 import { BottomNav } from "@/components/ui/BottomNav";
 import { DashboardScreen } from "@/components/screens/DashboardScreen";
@@ -19,8 +18,6 @@ function HomePageInner() {
 	const tabParam = searchParams.get("tab") as TabId | null;
 	const [tab, setTab] = useState<TabId>(tabParam || "dashboard");
 	const [loading, setLoading] = useState(true);
-	const revealMutation = useRevealDev();
-
 	useEffect(() => {
 		let cancelled = false;
 		async function checkAuth() {
@@ -75,29 +72,6 @@ function HomePageInner() {
 			{tab === "more" && <MoreScreen onLogout={handleLogout} />}
 
 			<BottomNav active={tab} onChange={changeTab} />
-
-			{/* Dev toolbar — ponytail: hidden in production */}
-			{typeof window !== "undefined" &&
-				process.env.NODE_ENV !== "production" && (
-					<div className="absolute bottom-20 right-3 z-50 flex flex-col gap-1">
-						<button
-							type="button"
-							onClick={() => revealMutation.mutate("morning_10am")}
-							disabled={revealMutation.isPending}
-							className="bg-primary text-white text-[10px] font-bold px-2.5 py-1.5 rounded-full shadow-lg active:scale-95 transition-transform"
-						>
-							{revealMutation.isPending ? "..." : "Dev: Morning"}
-						</button>
-						<button
-							type="button"
-							onClick={() => revealMutation.mutate("evening_930pm")}
-							disabled={revealMutation.isPending}
-							className="bg-primary text-white text-[10px] font-bold px-2.5 py-1.5 rounded-full shadow-lg active:scale-95 transition-transform"
-						>
-							{revealMutation.isPending ? "..." : "Dev: Evening"}
-						</button>
-					</div>
-				)}
 		</main>
 	);
 }
