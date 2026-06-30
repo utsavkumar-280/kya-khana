@@ -28,6 +28,20 @@
 - **Lucide** icons, **Radix UI** primitives
 - Fonts: **Plus Jakarta Sans** (display, 700–800) + **Be Vietnam Pro** (body, 400–600)
 
+### CSS Class vs Tailwind Segregation (hard rules)
+
+- **Custom CSS class (globals.css)** — use when a style pattern:
+  - Repeats 2+ times across components/pages
+  - Has 4+ properties that always travel together
+  - Carries semantic meaning (state variants like `.card-active`, named components like `.meal-top`)
+  - Has nested selectors, pseudo-elements, keyframe animations, or browser-specific CSS
+- **Inline Tailwind utilities** — use when a style is:
+  - A one-off layout tweak used in only 1 place
+  - 1-3 simple properties (padding, margin, flex, color, font-size)
+  - Not semantically meaningful enough to name
+- **Never** create a custom class for a single-use padding wrapper or trivial flex container.
+- **Never** leave a 5+ utility chain inline if it repeats 2+ times — extract it.
+
 ### Design System (hard rules)
 
 - **ALWAYS** load `skill:kya-khana-design-system` before editing any `.tsx`/`.css`/`.ts` under `apps/web/src/`

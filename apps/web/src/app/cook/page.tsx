@@ -112,10 +112,8 @@ export default function CookPage() {
 				{cookView && (
 					<div className="space-y-4">
 						{/* Winning combo */}
-						<div className="bg-surface border border-border rounded-[22px] p-4">
-							<h3 className="font-display font-bold text-sm text-text mb-3">
-								Winning Dish
-							</h3>
+						<div className="cook-card">
+							<h3 className="cook-section-title">Winning Dish</h3>
 							<ul className="space-y-2 text-sm">
 								{cookView.winningCombo.items.map((item) => (
 									<li key={item.dishId} className="flex items-center gap-2">
@@ -141,10 +139,8 @@ export default function CookPage() {
 
 						{/* Recipe steps */}
 						{cookView.recipeSteps.length > 0 && (
-							<div className="bg-surface border border-border rounded-[22px] p-4">
-								<h3 className="font-display font-bold text-sm text-text mb-3">
-									Recipe Steps
-								</h3>
+							<div className="cook-card">
+								<h3 className="cook-section-title">Recipe Steps</h3>
 								<ol className="space-y-2 text-sm text-text list-decimal list-inside">
 									{cookView.recipeSteps.map((step, i) => (
 										<li key={i} className="pl-1">
@@ -157,10 +153,8 @@ export default function CookPage() {
 
 						{/* Video references */}
 						{cookView.videoReferences.length > 0 && (
-							<div className="bg-surface border border-border rounded-[22px] p-4">
-								<h3 className="font-display font-bold text-sm text-text mb-3">
-									Video References
-								</h3>
+							<div className="cook-card">
+								<h3 className="cook-section-title">Video References</h3>
 								<div className="space-y-1">
 									{cookView.videoReferences.map((url, i) => (
 										<a

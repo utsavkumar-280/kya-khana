@@ -43,7 +43,7 @@ export function ComboOption({
 				{items.map((item, i) => (
 					<div className="dish-row" key={i}>
 						<span className="dish-emoji">{item.emoji || "🍽️"}</span>
-						<span className="dish-name">{item.name}</span>
+						<span className="flex-1 text-ink">{item.name}</span>
 						{item.diet && (
 							<span className={`diet-pill diet-pill-${item.diet}`}>
 								{item.diet === "nonveg" ? "Non-Veg" : "Veg"}

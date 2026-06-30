@@ -119,11 +119,7 @@ export default function LoginPage() {
 				<p className="auth-subheader">Sign in to continue</p>
 
 				{/* Error banner */}
-				{error && (
-					<p className="text-[13px] text-nonveg bg-nonveg-bg rounded-lg px-3 py-2 mb-4">
-						{error}
-					</p>
-				)}
+				{error && <p className="auth-error">{error}</p>}
 
 				{/* Tab switcher: Email | Phone */}
 				<div className="auth-tabs">

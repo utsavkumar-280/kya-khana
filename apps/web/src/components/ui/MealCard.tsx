@@ -89,9 +89,11 @@ function LockedCard({ meal }: MealCardProps) {
 				<span className="lockbadge">🔒 Locked</span>
 			</div>
 
-			<div className="preview">
+			<div className="px-4 pb-3">
 				<div className="preview-label">Preview</div>
-				<div className="preview-dishes">{firstComboDishes}</div>
+				<div className="text-[13px] text-muted leading-[1.45]">
+					{firstComboDishes}
+				</div>
 			</div>
 
 			{meal.opensInSec != null && (
@@ -121,11 +123,11 @@ function DecidedCard({ meal }: MealCardProps) {
 			</div>
 
 			{winner && (
-				<div className="result">
+				<div className="px-4 pb-4">
 					<div className="result-label">
 						The household chose Combo {winner.displayOrder === 1 ? "A" : "B"}
 					</div>
-					<div className="result-dishes">
+					<div className="flex flex-wrap gap-1.5">
 						{winner.items.map((item, i) => (
 							<span className="chip" key={i}>
 								{item.emoji} {item.dishName}

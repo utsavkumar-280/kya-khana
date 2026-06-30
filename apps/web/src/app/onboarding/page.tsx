@@ -122,7 +122,7 @@ export default function OnboardingPage() {
 									type="time"
 									value={morningCookTime}
 									onChange={(e) => setMorningCookTime(e.target.value)}
-									className="flex h-10 w-full rounded-xl border border-border bg-[#FDFBFA] px-3 py-2 text-sm mt-1.5 focus:outline-none focus:ring-2 focus:ring-primary/30"
+									className="onboarding-input"
 									required
 								/>
 							</div>
@@ -138,7 +138,7 @@ export default function OnboardingPage() {
 									type="time"
 									value={eveningCookTime}
 									onChange={(e) => setEveningCookTime(e.target.value)}
-									className="flex h-10 w-full rounded-xl border border-border bg-[#FDFBFA] px-3 py-2 text-sm mt-1.5 focus:outline-none focus:ring-2 focus:ring-primary/30"
+									className="onboarding-input"
 									required
 								/>
 							</div>
@@ -168,7 +168,7 @@ export default function OnboardingPage() {
 							<select
 								value={cuisinePreference}
 								onChange={(e) => setCuisinePreference(e.target.value)}
-								className="flex h-10 w-full rounded-xl border border-border bg-[#FDFBFA] px-3 py-2 text-sm mt-1.5 focus:outline-none focus:ring-2 focus:ring-primary/30"
+								className="onboarding-input"
 							>
 								<option value="north_indian">North Indian</option>
 								<option value="south_indian">South Indian</option>

@@ -36,7 +36,7 @@ export function InventoryScreen() {
 	return (
 		<div className="flex-1 min-h-0 flex flex-col">
 			{/* Toggle bar */}
-			<div className="toggle-wrap">
+			<div className="pt-1 px-4 pb-3">
 				<div className="toggle-track">
 					<button
 						className={`toggle-btn ${tab === "stock" ? "toggle-btn-on" : ""}`}
@@ -67,7 +67,7 @@ export function InventoryScreen() {
 								{items.map((item) => (
 									<div key={item.ingredientId} className="stock-row">
 										<span className="stock-name">{item.name}</span>
-										<div className="stepper">
+										<div className="flex items-center gap-1.5">
 											<button
 												className="stepper-btn"
 												onClick={() =>

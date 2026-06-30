@@ -16,7 +16,11 @@ export function AppHeader({
 			<button className="datebtn" onClick={onDateClick}>
 				<Calendar size={17} color="#E65100" />
 				{dateLabel}
-				<ChevronDown className="datebtn-chev" size={16} color="#B6ABA0" />
+				<ChevronDown
+					className="transition-transform duration-250"
+					size={16}
+					color="#B6ABA0"
+				/>
 			</button>
 		</header>
 	);
