@@ -1,6 +1,6 @@
 ---
 name: kya-khana-design-system
-description: Enforces the Kya Khana design system for all .tsx/.css/.ts edits under apps/web/src/. Colors, spacing, shadows, fonts, and component specs must match the DS exactly. Never invent new values.
+description: Enforces the Kya Khana design system for all .tsx/.css/.ts edits under apps/web/src/. MOBILE-ONLY app (390px design width). Colors, spacing, shadows, fonts, touch targets, safe areas, and component specs must match the DS exactly. Never invent new values.
 ---
 
 # Kya Khana — Design System Adherence Skill
@@ -8,6 +8,7 @@ description: Enforces the Kya Khana design system for all .tsx/.css/.ts edits un
 > **TRIGGER**: Any edit to a `.tsx`/`.css`/`.ts` file under `apps/web/src/` MUST follow this skill.
 > The design system is the SINGLE SOURCE OF TRUTH for all visual decisions.
 > Every component, color, spacing, and shadow value comes from this document.
+> **THIS IS A MOBILE-ONLY APP.** No desktop layouts, no hover states, no wide breakpoints.
 > NEVER invent new values. COPY from the DS screens and guidelines.
 
 ---
@@ -64,6 +65,81 @@ description: Enforces the Kya Khana design system for all .tsx/.css/.ts edits un
 | Header background | `linear-gradient(to bottom, var(--bg) 72%, rgba(251,245,236,0))` — NO backdrop-blur |
 | Active card border | `#F6D9BE` |
 | Decided card background | `#FAF4EB` |
+
+---
+
+## 2a. Mobile-Only Constraints (HARD RULES — no exceptions)
+
+This app targets **phone screens only**. The DS is designed at **390×844px** (iPhone 14/15/16 size). Every layout, component, and interaction must work within this constraint. Desktop is NOT a target.
+
+### Root Container
+
+```css
+/* Every page/layout MUST be wrapped in: */
+.root-container {
+  max-width: 390px;
+  margin: 0 auto;
+  width: 100%;
+  min-height: 100dvh; /* use dvh, not vh — respects mobile address bar */
+}
+```
+
+- **`max-w-[390px] mx-auto w-full`** on the root wrapper of every screen.
+- Use **`100dvh` / `min-h-dvh`** for full-height containers — never `100vh` (breaks on mobile Safari with collapsing address bar).
+- **No media queries for wider breakpoints.** No `md:`, `lg:`, `xl:` prefixes anywhere.
+
+### Touch Targets (minimum 44×44px)
+
+- Every tappable element (buttons, links, icons, toggle items, chips) MUST have a **minimum touch area of 44×44px** (Apple HIG).
+- If a visual element is smaller (e.g., 24px icon), add **invisible padding** to reach 44×44px, or wrap in a larger tap area.
+- Exception: inline text links inside paragraphs (but avoid these on mobile anyway).
+
+### Active States, NOT Hover
+
+- **Never use `:hover` or `hover:` for interaction feedback.** Hover doesn't exist on phones.
+- Use **`:active` / `active:`** pseudo-classes for press-down feedback.
+- `transition: transform 0.12s` on pressable items; `:active { transform: scale(0.97) }` is the standard press effect.
+- **No `cursor: pointer`** (irrelevant on touch).
+
+### Safe Area Insets (Notch / Island / Home Indicator)
+
+- Bottom-pinned elements (BottomNav, fixed CTAs, snackbars) MUST account for the home indicator:
+
+  ```css
+  padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  ```
+
+- Top-pinned elements (AppHeader, status bar area) MUST account for the notch/island:
+
+  ```css
+  padding-top: calc(0px + env(safe-area-inset-top, 0px));
+  ```
+
+- Use `env(safe-area-inset-*, 0px)` with a `0px` fallback.
+
+### No Horizontal Scroll
+
+- **Everything must fit within 390px.** No `overflow-x: auto` on main content areas.
+- Single-column layout only. Never side-by-side panels, sidebars, or multi-column grids wider than 390px.
+- The only exception is the combos grid inside MealCard (2 columns at 50% each) — that's the DS pattern.
+
+### Text Size Floor
+
+- **No body text below 11px.** Labels, captions, and badges can go to 10px minimum.
+- The existing diet pills at 8.5px are the ONLY permitted exception (DS-defined).
+- All new text must be ≥ 11px for readability on 390px screens.
+
+### Scroll Containers
+
+- Scrollable areas MUST use:
+
+  ```css
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  ```
+
+- Hide scrollbars on scrollable feeds: `scrollbar-width: none` / `.no-scrollbar`.
+- Scroll snap on the dashboard feed: `scroll-snap-type: y proximity`.
 
 ---
 
@@ -228,6 +304,14 @@ Before editing ANY UI file, confirm:
 - [ ] Border is always warm `#EDE3D6`
 - [ ] Spacing uses 4px grid
 - [ ] No cool-grey anywhere — warm taupe only
+- [ ] **MOBILE: root container uses `max-w-[390px] mx-auto w-full min-h-dvh`**
+- [ ] **MOBILE: every tappable element has ≥ 44×44px touch area**
+- [ ] **MOBILE: interactive feedback uses `active:` not `hover:`**
+- [ ] **MOBILE: bottom-fixed elements include `safe-area-inset-bottom`**
+- [ ] **MOBILE: top-fixed elements include `safe-area-inset-top`**
+- [ ] **MOBILE: no horizontal scroll; single-column layout only**
+- [ ] **MOBILE: no `md:`, `lg:`, `xl:` breakpoints anywhere**
+- [ ] **MOBILE: body text ≥ 11px (diet pills at 8.5px are the only exception)**
 - [ ] If uncertain about layout or spacing for a missing screen — **ask the user before writing code**
 
 ---
@@ -240,3 +324,7 @@ After editing UI, verify:
 - `pnpm turbo run build --filter=@kya-khana/web` passes
 - Visual matches the DS screen HTML files
 - For missing screens: every value traces back to either (a) an existing screen's pattern or (b) the token table
+- **MOBILE: no `hover:` pseudo-classes in changed files — grep for `hover:` and reject if found**
+- **MOBILE: no `md:`, `lg:`, `xl:` breakpoints in changed files**
+- **MOBILE: no `100vh` used — must be `100dvh` or `min-h-dvh`**
+- **MOBILE: root wrapper has `max-w-[390px] mx-auto`**

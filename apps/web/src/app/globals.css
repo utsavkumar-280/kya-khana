@@ -357,30 +357,169 @@ body {
 .auth-card {
   width: 100%; max-width: 360px;
   background: #FFFFFF; border: 1px solid #EDE3D6; border-radius: 22px;
-  box-shadow: 0 4px 14px rgba(53,40,28,0.06); padding: 24px 20px;
+  box-shadow: 0 4px 14px rgba(53,40,28,0.06); padding: 28px 20px 24px;
 }
 .auth-wordmark {
   text-align: center; font-family: var(--font-display); font-weight: 800;
-  font-size: 28px; letter-spacing: -0.03em; color: #E65100; margin-bottom: 4px;
+  font-size: 28px; letter-spacing: -0.03em; color: #E65100; margin-bottom: 2px;
 }
-.auth-subtitle { text-align: center; font-size: 14px; color: #8C8076; margin-bottom: 24px; }
+.auth-greeting {
+  text-align: center; font-family: var(--font-display); font-weight: 800;
+  font-size: 20px; letter-spacing: -0.02em; color: #2A211B; margin-bottom: 2px;
+}
+.auth-subheader { text-align: center; font-size: 13px; color: #8C8076; margin-bottom: 24px; }
 .auth-input {
   width: 100%; height: 44px; border: 1px solid #EDE3D6; border-radius: 14px;
   padding: 0 14px; font-size: 14px; color: #2A211B; background: #FFFDFB;
-  font-family: var(--font-sans); outline: none;
+  font-family: var(--font-sans); outline: none; transition: border-color 0.2s, box-shadow 0.2s;
 }
 .auth-input:focus { border-color: #E65100; box-shadow: 0 0 0 3px rgba(230,81,0,0.08); }
+.auth-input::placeholder { color: #B6ABA0; }
 .auth-label { font-size: 12px; font-weight: 600; color: #2A211B; margin-bottom: 6px; display: block; }
+.auth-forgot {
+  display: block; text-align: right; font-size: 12px; font-weight: 600;
+  color: #E65100; text-decoration: none; margin-top: 4px;
+}
 .auth-btn {
   width: 100%; height: 48px; border: none; cursor: pointer;
   border-radius: 14px; background: #E65100; color: #fff;
   font-family: var(--font-display); font-weight: 700; font-size: 16px;
   display: flex; align-items: center; justify-content: center;
-  transition: transform 0.12s, background 0.2s;
+  transition: transform 0.12s, background 0.2s; margin-top: 16px;
 }
 .auth-btn:active { transform: scale(0.97); }
+.auth-btn:disabled { opacity: 0.55; }
+
+/* Auth tabs (Email | Phone segmented control) */
+.auth-tabs {
+  display: flex; gap: 4px; padding: 4px;
+  background: #F2E9DB; border: 1px solid #EDE3D6;
+  border-radius: 999px; margin-bottom: 18px;
+}
+.auth-tab {
+  flex: 1; border: none; cursor: pointer; padding: 9px 12px;
+  border-radius: 999px; text-align: center;
+  font-family: var(--font-display); font-weight: 700; font-size: 13px;
+  color: #8C8076; background: transparent;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+.auth-tab-active {
+  background: #E65100; color: #fff;
+  box-shadow: 0 4px 12px rgba(230,81,0,0.30);
+}
+
+/* Auth divider */
+.auth-divider {
+  display: flex; align-items: center; gap: 12px;
+  margin: 18px 0; font-size: 12px; color: #B6ABA0;
+  font-weight: 500;
+}
+.auth-divider::before, .auth-divider::after {
+  content: ''; flex: 1; height: 1px;
+  background: #EDE3D6;
+}
+
+/* Auth social button */
+.auth-social {
+  width: 100%; height: 48px; border: 1.5px solid #EDE3D6; cursor: pointer;
+  border-radius: 14px; background: #FFFFFF; color: #2A211B;
+  font-family: var(--font-sans); font-weight: 600; font-size: 14px;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  transition: transform 0.12s, border-color 0.2s, background 0.2s;
+}
+.auth-social:active { transform: scale(0.97); border-color: #E65100; background: #FFFDFB; }
+
+/* Auth OTP grid */
+.auth-otp-grid {
+  display: flex; gap: 10px; justify-content: center;
+}
+.auth-otp-input {
+  width: 48px; height: 52px; border: 1.5px solid #EDE3D6;
+  border-radius: 14px; text-align: center;
+  font-family: var(--font-display); font-weight: 800; font-size: 22px;
+  color: #2A211B; background: #FFFDFB; outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.auth-otp-input:focus { border-color: #E65100; box-shadow: 0 0 0 3px rgba(230,81,0,0.08); }
+
+/* Auth phone row */
+.auth-phone-row {
+  display: flex; gap: 8px; align-items: flex-end;
+}
+.auth-phone-row .auth-input { flex: 1; }
+.auth-send-otp {
+  height: 44px; padding: 0 14px; border: 1px solid #E65100;
+  border-radius: 14px; cursor: pointer;
+  background: #FFF1E3; color: #E65100;
+  font-family: var(--font-display); font-weight: 700; font-size: 12px;
+  white-space: nowrap; transition: transform 0.12s, background 0.2s;
+}
+.auth-send-otp:active { transform: scale(0.97); }
+.auth-send-otp:disabled { opacity: 0.5; }
+
 .auth-link { text-align: center; font-size: 13px; color: #8C8076; margin-top: 16px; }
 .auth-link a { color: #E65100; font-weight: 600; text-decoration: none; }
+
+/* ========== WELCOME PAGE ========== */
+.welcome-page {
+  min-height: 100dvh; display: flex; flex-direction: column;
+  background: #FBF5EC; padding: 0 16px;
+  overflow: hidden;
+}
+.welcome-hero {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+  position: relative;
+}
+.welcome-circle-bg {
+  width: 260px; height: 260px; border-radius: 50%;
+  background: #FFF1E3; position: relative;
+  display: grid; place-items: center;
+}
+/* Decorative dots ring */
+.welcome-circle-bg::before {
+  content: ''; position: absolute; inset: -14px;
+  border-radius: 50%;
+  border: 2px dashed rgba(230,81,0,0.18);
+}
+/* Decorative floating dots */
+.welcome-dots {
+  position: absolute; width: 100%; height: 100%;
+  pointer-events: none;
+}
+.welcome-dot {
+  position: absolute; border-radius: 50%; background: #E65100;
+  opacity: 0.15;
+}
+.welcome-circle-img {
+  width: 220px; height: 220px; border-radius: 50%;
+  overflow: hidden; position: relative;
+  box-shadow: 0 8px 28px rgba(53,40,28,0.10);
+}
+.welcome-circle-img img {
+  object-fit: cover; width: 100%; height: 100%;
+}
+.welcome-bottom {
+  padding: 0 8px 40px; text-align: center;
+}
+.welcome-headline {
+  font-family: var(--font-display); font-weight: 800;
+  font-size: 26px; letter-spacing: -0.02em;
+  color: #2A211B; margin-bottom: 8px;
+  line-height: 1.15;
+}
+.welcome-subtext {
+  font-size: 14px; color: #8C8076; line-height: 1.55;
+  margin-bottom: 24px; max-width: 320px; margin-left: auto; margin-right: auto;
+}
+.welcome-btn {
+  width: 100%; max-width: 320px; height: 52px;
+  border: none; cursor: pointer;
+  border-radius: 16px; background: #E65100; color: #fff;
+  font-family: var(--font-display); font-weight: 700; font-size: 16px;
+  display: inline-flex; align-items: center; justify-content: center;
+  transition: transform 0.12s; box-shadow: 0 4px 14px rgba(53,40,28,0.06);
+}
+.welcome-btn:active { transform: scale(0.97); }
 
 /* Role picker cards for onboarding */
 .role-card {
