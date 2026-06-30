@@ -4,8 +4,12 @@ import Link from "next/link";
 export default function WelcomePage() {
 	return (
 		<main className="welcome-page max-w-[390px] mx-auto">
-			{/* Hero illustration area */}
+			{/* Wordmark + Hero illustration */}
 			<div className="welcome-hero">
+				<h1 className="welcome-wordmark">
+					kya <span className="wordmark-dash">-</span> khana
+				</h1>
+
 				<div className="welcome-circle-bg">
 					<div className="welcome-circle-img">
 						<Image
@@ -68,9 +72,9 @@ export default function WelcomePage() {
 				</div>
 			</div>
 
-			{/* Text + CTA */}
+			{/* Feature tagline + description + CTA */}
 			<div className="welcome-bottom">
-				<h1 className="welcome-headline">Plan Meals Together</h1>
+				<h2 className="welcome-headline">Plan Meals &amp; Groceries</h2>
 				<p className="welcome-subtext">
 					Vote on delicious combos, track your kitchen inventory, and let the
 					app build your grocery list — all before the cook arrives.
