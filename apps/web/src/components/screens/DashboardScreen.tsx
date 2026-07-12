@@ -54,7 +54,7 @@ export function DashboardScreen() {
 	return (
 		<div
 			ref={feedRef}
-			className="flex-1 min-h-0 overflow-y-auto no-scrollbar flex flex-col gap-4 px-4 pt-1.5 pb-[72px]"
+			className="app-scroll flex-1 min-h-0 overflow-y-auto no-scrollbar flex flex-col gap-4 px-4 pt-1.5 pb-[78px]"
 			style={{ scrollSnapType: "y proximity", scrollBehavior: "smooth" }}
 		>
 			<p

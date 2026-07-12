@@ -3,13 +3,12 @@ import Link from "next/link";
 
 export default function WelcomePage() {
 	return (
-		<main className="welcome-page max-w-[390px] mx-auto">
-			{/* Wordmark + Hero illustration */}
-			<div className="welcome-hero">
-				<h1 className="welcome-wordmark">
-					kya <span className="wordmark-dash">-</span> khana
-				</h1>
+		<main className="app-shell entry-page welcome-page">
+			<h1 className="entry-wordmark">
+				kya <span className="wordmark-dash">-</span> khana
+			</h1>
 
+			<div className="welcome-artwork">
 				<div className="welcome-circle-bg">
 					<div className="welcome-circle-img">
 						<Image
@@ -24,66 +23,25 @@ export default function WelcomePage() {
 
 				{/* Decorative floating dots */}
 				<div className="welcome-dots" aria-hidden="true">
-					<span
-						className="welcome-dot"
-						style={{
-							width: 11,
-							height: 11,
-							top: "18%",
-							left: "8%",
-						}}
-					/>
-					<span
-						className="welcome-dot"
-						style={{
-							width: 7,
-							height: 7,
-							top: "28%",
-							right: "6%",
-						}}
-					/>
-					<span
-						className="welcome-dot"
-						style={{
-							width: 14,
-							height: 14,
-							bottom: "22%",
-							left: "10%",
-						}}
-					/>
-					<span
-						className="welcome-dot"
-						style={{
-							width: 8,
-							height: 8,
-							bottom: "30%",
-							right: "10%",
-						}}
-					/>
-					<span
-						className="welcome-dot"
-						style={{
-							width: 6,
-							height: 6,
-							top: "14%",
-							left: "24%",
-						}}
-					/>
+					<span className="welcome-dot welcome-dot-1" />
+					<span className="welcome-dot welcome-dot-2" />
+					<span className="welcome-dot welcome-dot-3" />
+					<span className="welcome-dot welcome-dot-4" />
+					<span className="welcome-dot welcome-dot-5" />
 				</div>
 			</div>
 
-			{/* Feature tagline + description + CTA */}
-			<div className="welcome-bottom">
+			<div className="welcome-content">
 				<h2 className="welcome-headline">Plan Meals &amp; Groceries</h2>
 				<p className="welcome-subtext">
 					Vote on delicious combos, track your kitchen inventory, and let the
 					app build your grocery list — all before the cook arrives.
 				</p>
-
-				<Link href="/login">
-					<button className="welcome-btn">Get Started</button>
-				</Link>
 			</div>
+
+			<Link href="/login" className="welcome-btn">
+				Get Started
+			</Link>
 		</main>
 	);
 }

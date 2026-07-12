@@ -24,7 +24,7 @@ function mealLabel(m: MealCycleDTO) {
 export default function CookPage() {
 	const router = useRouter();
 	const { data, isLoading } = useMealsFeed();
-	const [selectedCycleId, setSelectedCycleId] = useState<string>("");
+	const [selectedCycleId, setSelectedCycleId] = useState("");
 	const { data: cookView, isLoading: cookLoading } =
 		useCookView(selectedCycleId);
 	const markMutation = useMarkCooked();
@@ -52,10 +52,10 @@ export default function CookPage() {
 	};
 
 	return (
-		<main className="flex flex-col h-dvh max-w-[390px] mx-auto bg-bg">
+		<main className="app-shell flex flex-col h-dvh bg-bg">
 			<AppHeader dateLabel="Cook" onDateClick={undefined} />
 
-			<div className="flex-1 overflow-y-auto px-4 pb-6 pt-2 flex flex-col gap-4">
+			<div className="app-scroll flex-1 overflow-y-auto px-4 pb-6 pt-2 flex flex-col gap-4">
 				{/* Back button */}
 				<button
 					type="button"
@@ -157,15 +157,16 @@ export default function CookPage() {
 								<h3 className="cook-section-title">Video References</h3>
 								<div className="space-y-1">
 									{cookView.videoReferences.map((url, i) => (
-										<a
+										<button
 											key={i}
-											href={url}
-											target="_blank"
-											rel="noopener noreferrer"
-											className="block text-xs text-primary underline break-all"
+											type="button"
+											onClick={() =>
+												window.open(url, "_blank", "noopener,noreferrer")
+											}
+											className="block min-h-11 text-left text-xs text-primary underline break-all"
 										>
 											{url}
-										</a>
+										</button>
 									))}
 								</div>
 							</div>

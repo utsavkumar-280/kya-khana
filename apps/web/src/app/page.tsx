@@ -57,14 +57,14 @@ function HomePageInner() {
 
 	if (loading) {
 		return (
-			<main className="flex min-h-screen items-center justify-center bg-bg">
+			<main className="app-shell flex min-h-dvh items-center justify-center bg-bg">
 				<p className="text-text-muted">Loading...</p>
 			</main>
 		);
 	}
 
 	return (
-		<main className="flex flex-col h-dvh max-w-[390px] mx-auto bg-bg relative">
+		<main className="app-shell flex flex-col h-dvh bg-bg relative">
 			<AppHeader dateLabel="Today" />
 
 			{tab === "dashboard" && <DashboardScreen />}

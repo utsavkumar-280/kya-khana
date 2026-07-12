@@ -46,7 +46,7 @@ export default function RootLayout({
 			lang="en"
 			className={`${displayFont.variable} ${bodyFont.variable} ${hindiFont.variable}`}
 		>
-			<body className="bg-bg text-ink antialiased">
+			<body className="app-viewport bg-bg text-ink antialiased">
 				<Providers>{children}</Providers>
 			</body>
 		</html>

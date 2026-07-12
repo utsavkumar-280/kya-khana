@@ -37,7 +37,7 @@ export default function OnboardingPage() {
 	});
 
 	return (
-		<main className="flex min-h-screen items-center justify-center bg-bg p-4">
+		<main className="app-shell flex min-h-dvh items-center justify-center bg-bg p-4">
 			<div className="w-full max-w-[360px]">
 				{/* Wordmark */}
 				<h1 className="text-center font-display font-extrabold text-[28px] tracking-[-0.03em] text-primary mb-1">
