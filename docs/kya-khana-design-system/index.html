@@ -286,13 +286,18 @@
         });
 
         // Meta
-        document.getElementById("meta").innerHTML = `
-    <span>${manifest.components.length} components</span>
-    <span>${manifest.tokens.length} tokens</span>
-    <span>${manifest.cards.length} cards</span>
-    <span>3 brand fonts</span>
-    <span>390px PWA</span>
-  `;
+        const meta = document.getElementById("meta");
+        for (const label of [
+          `${manifest.components.length} components`,
+          `${manifest.tokens.length} tokens`,
+          `${manifest.cards.length} cards`,
+          "3 brand fonts",
+          "390→1024px PWA",
+        ]) {
+          const item = document.createElement("span");
+          item.textContent = label;
+          meta.appendChild(item);
+        }
 
         // Nav
         const nav = document.getElementById("nav");
@@ -320,42 +325,84 @@
           btn.classList.add("active");
         }
 
-        function cardHTML(card) {
+        function clearElement(element) {
+          while (element.firstChild) {
+            element.removeChild(element.firstChild);
+          }
+        }
+
+        function createHeading(text) {
+          const heading = document.createElement("h2");
+          heading.textContent = text;
+          heading.style.gridColumn = "1/-1";
+          heading.style.fontFamily = "'Plus Jakarta Sans', sans-serif";
+          heading.style.fontSize = "1.25rem";
+          heading.style.fontWeight = "700";
+          heading.style.color = "#E65100";
+          heading.style.marginTop = "8px";
+          return heading;
+        }
+
+        function createCard(card) {
           const aspect = card.viewport
             ? parseInt(card.viewport.split("x")[1]) /
               parseInt(card.viewport.split("x")[0])
             : 0.6;
-          const h = Math.round(360 * aspect);
-          return `
-      <div class="card-wrap" onclick="openOverlay('${card.path}', '${card.name}')">
-        <div class="card-label">
-          <span class="name">${card.name}</span>
-          <span class="sub">${card.subtitle || ""}</span>
-        </div>
-        <iframe class="card-frame" src="${card.path}" style="height:${h}px" loading="lazy"></iframe>
-      </div>`;
+          const height = Math.round(360 * aspect);
+
+          const wrap = document.createElement("div");
+          wrap.className = "card-wrap";
+          wrap.addEventListener("click", () =>
+            openOverlay(card.path, card.name),
+          );
+
+          const label = document.createElement("div");
+          label.className = "card-label";
+
+          const name = document.createElement("span");
+          name.className = "name";
+          name.textContent = card.name;
+
+          const subtitle = document.createElement("span");
+          subtitle.className = "sub";
+          subtitle.textContent = card.subtitle || "";
+
+          const frame = document.createElement("iframe");
+          frame.className = "card-frame";
+          frame.src = card.path;
+          frame.style.height = `${height}px`;
+          frame.loading = "lazy";
+
+          label.append(name, subtitle);
+          wrap.append(label, frame);
+          return wrap;
         }
 
         function renderAll(groups, sortedGroups) {
           const gallery = document.getElementById("gallery");
-          let html = "";
-          for (const g of sortedGroups) {
-            html += `<h2 style="grid-column:1/-1;font-family:'Plus Jakarta Sans',sans-serif;font-size:1.25rem;font-weight:700;color:#E65100;margin-top:8px">${g}</h2>`;
-            html += groups[g].map(cardHTML).join("");
+          clearElement(gallery);
+          for (const groupName of sortedGroups) {
+            gallery.appendChild(createHeading(groupName));
+            for (const card of groups[groupName]) {
+              gallery.appendChild(createCard(card));
+            }
           }
-          gallery.innerHTML = html;
         }
 
         function renderGroup(cards, groupName) {
           const gallery = document.getElementById("gallery");
+          clearElement(gallery);
           if (cards.length === 0) {
-            gallery.innerHTML =
-              '<div class="empty">No cards in this group.</div>';
+            const empty = document.createElement("div");
+            empty.className = "empty";
+            empty.textContent = "No cards in this group.";
+            gallery.appendChild(empty);
             return;
           }
-          gallery.innerHTML =
-            `<h2 style="grid-column:1/-1;font-family:'Plus Jakarta Sans',sans-serif;font-size:1.25rem;font-weight:700;color:#E65100;margin-top:8px">${groupName}</h2>` +
-            cards.map(cardHTML).join("");
+          gallery.appendChild(createHeading(groupName));
+          for (const card of cards) {
+            gallery.appendChild(createCard(card));
+          }
         }
 
         renderAll(groups, sortedGroups);

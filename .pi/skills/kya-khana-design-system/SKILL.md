@@ -1,6 +1,6 @@
 ---
 name: kya-khana-design-system
-description: Enforces the Kya Khana design system for all .tsx/.css/.ts edits under apps/web/src/. MOBILE-ONLY app (390px design width). Colors, spacing, shadows, fonts, touch targets, safe areas, and component specs must match the DS exactly. Never invent new values.
+description: Enforces the Kya Khana design system for all .tsx/.css/.ts edits under apps/web/src/. Device-flexible PWA with a 390px canonical phone design, phone/tablet breakpoints, and a 1024px desktop shell cap. Colors, spacing, shadows, fonts, touch targets, safe areas, and component specs must match the DS exactly. Never invent new values.
 ---
 
 # Kya Khana — Design System Adherence Skill
@@ -8,7 +8,7 @@ description: Enforces the Kya Khana design system for all .tsx/.css/.ts edits un
 > **TRIGGER**: Any edit to a `.tsx`/`.css`/`.ts` file under `apps/web/src/` MUST follow this skill.
 > The design system is the SINGLE SOURCE OF TRUTH for all visual decisions.
 > Every component, color, spacing, and shadow value comes from this document.
-> **THIS IS A MOBILE-ONLY APP.** No desktop layouts, no hover states, no wide breakpoints.
+> **THIS IS A DEVICE-FLEXIBLE PWA.** Design mobile-first from the 390px canonical phone screen, then layer phone, tablet, and desktop-shell behavior using the DS breakpoints below.
 > NEVER invent new values. COPY from the DS screens and guidelines.
 
 ---
@@ -55,7 +55,9 @@ description: Enforces the Kya Khana design system for all .tsx/.css/.ts edits un
 
 | Element | Value |
 |---------|-------|
-| Device width | `390px` |
+| Canonical phone design width | `390px` |
+| Largest phone width | `440px` |
+| Tablet / desktop shell max width | `1024px` |
 | Status bar height | `46px` |
 | Header height | `62px` (NOT 56px) |
 | Bottom nav height | `78px` (with padding) |
@@ -68,66 +70,138 @@ description: Enforces the Kya Khana design system for all .tsx/.css/.ts edits un
 
 ---
 
-## 2a. Mobile-Only Constraints (HARD RULES — no exceptions)
+## 2a. Device-Flexible Layout Constraints (HARD RULES — no exceptions)
 
-This app targets **phone screens only**. The DS is designed at **390×844px** (iPhone 14/15/16 size). Every layout, component, and interaction must work within this constraint. Desktop is NOT a target.
+Kya Khana is a **device-flexible PWA**. The canonical DS screen remains
+**390×844px**, but the app must now support:
 
-### Root Container
+1. viewport responsiveness as the browser resizes;
+2. a device-detected phone layer for real/emulated phones; and
+3. tablet/desktop shells capped at the largest tablet width.
+
+### Breakpoint Ladder
+
+Use these viewport widths. Do not invent new breakpoints.
+
+| Name | Width | Purpose |
+| ---- | ----: | ------- |
+| `phone-xs` | `320px` | Very small phones / legacy devices |
+| `phone-sm` | `360px` | Galaxy S8+, Galaxy S5-ish |
+| `phone-md` | `375px` | iPhone SE, iPhone 6/7/8 |
+| `phone-lg` | `390px` | Canonical DS phone width |
+| `phone-xl` | `412px` | Pixel and Samsung large phones |
+| `phone-2xl` | `430px` | iPhone Pro Max sizes |
+| `phone-3xl` | `440px` | Largest current phone preset |
+| `tablet-sm` | `768px` | iPad Mini / small tablet |
+| `tablet-md` | `820px` | iPad Air / medium tablet |
+| `tablet-lg` | `1024px` | iPad Pro / desktop shell cap |
+
+### Root App Shell
+
+Every page/layout MUST be wrapped in the app shell. The shell starts
+mobile-first and is capped at `1024px` on tablet, desktop, and wide monitors.
 
 ```css
-/* Every page/layout MUST be wrapped in: */
-.root-container {
-  max-width: 390px;
-  margin: 0 auto;
+.app-shell {
   width: 100%;
-  min-height: 100dvh; /* use dvh, not vh — respects mobile address bar */
+  max-width: 1024px;
+  min-height: 100dvh;
+  margin-inline: auto;
+}
+
+@media (min-width: 1024px) {
+  body {
+    min-height: 100dvh;
+    display: grid;
+    place-items: center;
+    padding-block: 32px;
+  }
 }
 ```
 
-- **`max-w-[390px] mx-auto w-full`** on the root wrapper of every screen.
-- Use **`100dvh` / `min-h-dvh`** for full-height containers — never `100vh` (breaks on mobile Safari with collapsing address bar).
-- **No media queries for wider breakpoints.** No `md:`, `lg:`, `xl:` prefixes anywhere.
+- Use **`100dvh` / `min-h-dvh`** for full-height containers — never `100vh`.
+- Desktop and wide monitors MUST NOT expand content beyond `1024px`.
+- Desktop and wide monitors SHOULD center the shell with vertical breathing room.
+- Tablet layouts may use the `768px`, `820px`, and `1024px` breakpoints.
+- Phone layouts must still be designed and QA'd first at `390px`.
+
+### Device-Detected Phone Layer
+
+Viewport CSS answers: **how wide is the viewport?**
+
+The device layer answers: **is this a phone-like browser/device?**
+
+On reload, the app may add global markers such as:
+
+```html
+<html data-device="phone" data-os="ios" data-display-mode="browser">
+```
+
+The phone layer MUST be based on UA/client hints + touch capability + phone
+viewport. Recommended baseline:
+
+```ts
+const isPhoneDevice =
+  /iPhone|Android|Mobile/i.test(navigator.userAgent) &&
+  navigator.maxTouchPoints > 0 &&
+  window.innerWidth <= 480;
+```
+
+Use this layer only for phone-specific polish such as safe areas, fixed bottom
+navigation, keyboard-aware forms, and PWA standalone adjustments. Do not use it
+as a replacement for viewport breakpoints.
 
 ### Touch Targets (minimum 44×44px)
 
-- Every tappable element (buttons, links, icons, toggle items, chips) MUST have a **minimum touch area of 44×44px** (Apple HIG).
-- If a visual element is smaller (e.g., 24px icon), add **invisible padding** to reach 44×44px, or wrap in a larger tap area.
-- Exception: inline text links inside paragraphs (but avoid these on mobile anyway).
+- Every tappable element (buttons, links, icons, toggle items, chips) MUST have
+  a **minimum touch area of 44×44px**.
+- If a visual element is smaller, add invisible padding or wrap it in a larger
+  tap area.
+- This requirement applies on all breakpoints because touch laptops and tablets
+  exist.
 
-### Active States, NOT Hover
+### Active, Hover, and Pointer States
 
-- **Never use `:hover` or `hover:` for interaction feedback.** Hover doesn't exist on phones.
-- Use **`:active` / `active:`** pseudo-classes for press-down feedback.
-- `transition: transform 0.12s` on pressable items; `:active { transform: scale(0.97) }` is the standard press effect.
-- **No `cursor: pointer`** (irrelevant on touch).
+- `:active` / `active:` press feedback is required for tappable controls.
+- Hover may be added only as a desktop/tablet enhancement and must never be the
+  only visible affordance.
+- Phone-specific UI must not rely on hover.
+- `cursor: pointer` is allowed only for desktop/tablet affordance, not as a
+  substitute for clear touch states.
 
 ### Safe Area Insets (Notch / Island / Home Indicator)
 
-- Bottom-pinned elements (BottomNav, fixed CTAs, snackbars) MUST account for the home indicator:
+- Bottom-pinned phone elements MUST account for the home indicator:
 
   ```css
   padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
   ```
 
-- Top-pinned elements (AppHeader, status bar area) MUST account for the notch/island:
+- Top-pinned phone elements MUST account for the notch/island:
 
   ```css
   padding-top: calc(0px + env(safe-area-inset-top, 0px));
   ```
 
 - Use `env(safe-area-inset-*, 0px)` with a `0px` fallback.
+- Safe-area rules should be scoped to `[data-device="phone"]` when they would
+  add unwanted desktop/tablet spacing.
 
 ### No Horizontal Scroll
 
-- **Everything must fit within 390px.** No `overflow-x: auto` on main content areas.
-- Single-column layout only. Never side-by-side panels, sidebars, or multi-column grids wider than 390px.
-- The only exception is the combos grid inside MealCard (2 columns at 50% each) — that's the DS pattern.
+- Main content must not create page-level horizontal scroll at any breakpoint.
+- Phone layouts are single-column by default.
+- Tablet layouts may introduce two-column sections only when every column keeps
+  the DS spacing, touch target, and card rules.
+- Desktop/wide layouts must remain inside the `1024px` shell.
 
 ### Text Size Floor
 
-- **No body text below 11px.** Labels, captions, and badges can go to 10px minimum.
-- The existing diet pills at 8.5px are the ONLY permitted exception (DS-defined).
-- All new text must be ≥ 11px for readability on 390px screens.
+- **No body text below 11px.** Labels, captions, and badges can go to 10px
+  minimum.
+- The existing diet pills at 8.5px are the ONLY permitted exception
+  (DS-defined).
+- All new text must be readable at the `390px` canonical phone width.
 
 ### Scroll Containers
 
@@ -304,14 +378,17 @@ Before editing ANY UI file, confirm:
 - [ ] Border is always warm `#EDE3D6`
 - [ ] Spacing uses 4px grid
 - [ ] No cool-grey anywhere — warm taupe only
-- [ ] **MOBILE: root container uses `max-w-[390px] mx-auto w-full min-h-dvh`**
-- [ ] **MOBILE: every tappable element has ≥ 44×44px touch area**
-- [ ] **MOBILE: interactive feedback uses `active:` not `hover:`**
-- [ ] **MOBILE: bottom-fixed elements include `safe-area-inset-bottom`**
-- [ ] **MOBILE: top-fixed elements include `safe-area-inset-top`**
-- [ ] **MOBILE: no horizontal scroll; single-column layout only**
-- [ ] **MOBILE: no `md:`, `lg:`, `xl:` breakpoints anywhere**
-- [ ] **MOBILE: body text ≥ 11px (diet pills at 8.5px are the only exception)**
+- [ ] **LAYOUT: app shell uses `w-full max-w-[1024px] mx-auto min-h-dvh`**
+- [ ] **LAYOUT: desktop/wide screens center the shell and never exceed `1024px`**
+- [ ] **BREAKPOINTS: use only the DS phone/tablet ladder above**
+- [ ] **PHONE: canonical layout works at `390px` and largest phone at `440px`**
+- [ ] **PHONE: device-specific polish is scoped to `[data-device="phone"]`**
+- [ ] **TOUCH: every tappable element has ≥ 44×44px touch area**
+- [ ] **TOUCH: interactive feedback includes `active:` / press states**
+- [ ] **SAFE AREA: phone bottom-fixed elements include `safe-area-inset-bottom`**
+- [ ] **SAFE AREA: phone top-fixed elements include `safe-area-inset-top`**
+- [ ] **SCROLL: no page-level horizontal scroll at any breakpoint**
+- [ ] **TYPE: body text ≥ 11px (diet pills at 8.5px are the only exception)**
 - [ ] If uncertain about layout or spacing for a missing screen — **ask the user before writing code**
 
 ---
@@ -324,7 +401,9 @@ After editing UI, verify:
 - `pnpm turbo run build --filter=@kya-khana/web` passes
 - Visual matches the DS screen HTML files
 - For missing screens: every value traces back to either (a) an existing screen's pattern or (b) the token table
-- **MOBILE: no `hover:` pseudo-classes in changed files — grep for `hover:` and reject if found**
-- **MOBILE: no `md:`, `lg:`, `xl:` breakpoints in changed files**
-- **MOBILE: no `100vh` used — must be `100dvh` or `min-h-dvh`**
-- **MOBILE: root wrapper has `max-w-[390px] mx-auto`**
+- **LAYOUT: no content expands beyond the `1024px` shell on desktop/wide screens**
+- **BREAKPOINTS: responsive classes/media queries match the DS breakpoint ladder**
+- **PHONE: `[data-device="phone"]` behavior is additive to viewport responsiveness**
+- **PHONE: safe-area behavior works for iOS-style phone presets**
+- **TOUCH: no tappable target is below 44×44px**
+- **VIEWPORT: no `100vh` used — must be `100dvh` or `min-h-dvh`**

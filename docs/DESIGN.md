@@ -31,7 +31,9 @@ Active tab: pill-shaped highlight in warm amber. Inactive: muted with icon + lab
 
 | Token | Value |
 |-------|-------|
-| **Width** | 390px (mobile-first) |
+| **Canonical phone width** | 390px (mobile-first design reference) |
+| **Largest phone width** | 440px |
+| **Tablet / desktop shell cap** | 1024px |
 | **Headline font** | Plus Jakarta Sans |
 | **Body font** | Be Vietnam Pro |
 | **Primary color** | #E65100 (warm amber/orange) |
@@ -66,6 +68,7 @@ Prominent full-color card. Represents ONE meal (e.g., "Tonight's Dinner").
 **Two combo choices** in side-by-side split layout:
 
 **Combo A (left):**
+
 - 🍚 Jeera Rice
 - 🍗 Butter Chicken (red non-veg badge)
 - 🫘 Dal Tadka
@@ -75,6 +78,7 @@ Prominent full-color card. Represents ONE meal (e.g., "Tonight's Dinner").
 - "🟢 2 votes" indicator
 
 **Combo B (right):**
+
 - 🫓 Wheat Roti (Phulka)
 - 🌿 Palak Paneer (green veg badge)
 - 🫘 Dal Makhani
@@ -122,6 +126,7 @@ Two tabs at top: **[Stock]** **[Grocery List]** — active tab highlighted in wa
 Categorized ingredient list grouped by category, each item shows name + quantity + unit. Tappable rows to edit.
 
 **Vegetables:**
+
 | Item | Quantity |
 |------|----------|
 | 🧅 Onion | 4 pieces |
@@ -132,6 +137,7 @@ Categorized ingredient list grouped by category, each item shows name + quantity
 | 🧄 Garlic | 10 cloves |
 
 **Dairy:**
+
 | Item | Quantity |
 |------|----------|
 | 🧀 Paneer | 400g |
@@ -139,12 +145,14 @@ Categorized ingredient list grouped by category, each item shows name + quantity
 | 🧈 Butter | 200g |
 
 **Grains & Flours:**
+
 | Item | Quantity |
 |------|----------|
 | 🌾 Wheat Flour (Atta) | 2kg |
 | 🍚 Basmati Rice | 1.5kg |
 
 **Lentils:**
+
 | Item | Quantity |
 |------|----------|
 | 🫘 Toor Dal | 500g |
@@ -157,10 +165,12 @@ Categorized ingredient list grouped by category, each item shows name + quantity
 Auto-generated from decided meals. Shows what's needed for upcoming cook sessions.
 
 **Visual indicators:**
+
 - ⬜ Need to buy — highlighted row with soft red tint left border
 - ✅ Already in stock — strikethrough, greyed out
 
 **"For Tonight's Dinner":**
+
 | Status | Item | Quantity |
 |--------|------|----------|
 | ⬜ | Chicken | 300g |
@@ -170,6 +180,7 @@ Auto-generated from decided meals. Shows what's needed for upcoming cook session
 | ⬜ | Ginger | 15g |
 
 **"For Tomorrow Breakfast":**
+
 | Status | Item | Quantity |
 |--------|------|----------|
 | ⬜ | Eggs | 6 pieces |
@@ -232,7 +243,7 @@ Morning = Breakfast (e.g., Masala Omelette + Bread Toast, Idli + Sambar + Coconu
 
 ## Design Direction
 
-- **Mobile-first** PWA, 390px wide
+- **Device-flexible** PWA: mobile-first at 390px, phone support up to 440px, tablet and desktop shell capped at 1024px
 - **Warm, appetizing feel** — food app, not corporate. Earthy tones, warm oranges/ambers.
 - **Clean and minimal** — the food is the focus, not the UI chrome
 - **Clear hierarchy** — active meal is prominent, upcoming is subdued, past is muted
@@ -240,4 +251,6 @@ Morning = Breakfast (e.g., Masala Omelette + Bread Toast, Idli + Sambar + Coconu
 - **Deadline timers** — prominent countdown on active cards (#D84315)
 - **Snap effect** — smooth, satisfying magnet snap as cards lock to the top
 - **Bottom nav** — 3 icons, always visible, current tab highlighted (pill-shaped)
+- **Device-detected phone layer** — on reload, UA/client hints + touch + phone viewport may add `data-device="phone"` for safe-area, fixed-nav, keyboard, and PWA polish
+- **Large monitor behavior** — desktop and wide screens center the app shell with vertical breathing room, without expanding past 1024px
 - **Hindi + English** dish names where appropriate

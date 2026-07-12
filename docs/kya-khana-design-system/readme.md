@@ -1,4 +1,5 @@
 # Kya Khana — Design System
+
 ### क्या खाना · "What to eat?"
 
 A warm, appetizing design system for **Kya Khana**, a meal-planning PWA for shared Indian households (3–4 housemates and one cook). The app decides *what to eat* and *what groceries to buy* before the cook arrives — through timed voting windows on North-Indian meal combos.
@@ -9,7 +10,7 @@ A warm, appetizing design system for **Kya Khana**, a meal-planning PWA for shar
 
 ## Product context
 
-- **Mobile-first PWA, 390px wide.** Three-tab bottom navigation: **Dashboard · Inventory · More**.
+- **Device-flexible PWA.** Canonical phone design is `390px`; phones scale up to `440px`, while tablet/desktop shells cap at `1024px`. Three-tab bottom navigation: **Dashboard · Inventory · More**.
 - **Dashboard** is the heart: a vertical feed of *meal cards* where **scroll = time navigation** (up = future, down = past). Cards magnet-snap to the top and the calendar header tracks the snapped day.
 - Each meal card holds **two combos (A / B)**, each a list of components: Carb · Sabji/Protein · Dal (optional) · Curd/Salad/Sides. Households **vote A or B** inside a live window.
 - Three card states: **Active** (full color, countdown, voting), **Locked** (greyed preview, opens-in countdown), **Decided** (past, shows only the winning combo with ✅).
@@ -44,7 +45,8 @@ A warm, appetizing design system for **Kya Khana**, a meal-planning PWA for shar
 - **Elevation system.** `xs → sm → md → lg` warm shadows; `--shadow-snap` for the magnet-snapped card; `--shadow-nav` lifts the bottom bar. The header uses translucent cream + `blur(12px)` (the only place blur is used).
 - **Motion.** Purposeful and physical. The signature is the **magnet snap** (`--ease-snap`, a slight overshoot) as cards lock to the top. Buttons **press-scale to 0.97**. Sheets fade + rise. Countdowns tick and **shift color** saffron → chili as deadlines approach. No infinite/decorative loops; respect reduced-motion.
 - **Hover/press.** Touch-first, so press states dominate: scale-down on buttons, fill/tint change on toggles & checkboxes. Hover (where present) darkens the saffron one step.
-- **Layout.** Fixed 390px frame. Sticky translucent header (56px) at top, fixed 3-tab nav (64px) at bottom, scrolling content between. Default gutter 16px. 4px spacing grid throughout.
+- **Layout.** Mobile-first app shell with `390px` as the canonical phone reference. The shell supports phone breakpoints through `440px`, tablet breakpoints at `768px`, `820px`, and `1024px`, and desktop/wide centering capped at `1024px`. Sticky translucent header (56px) at top, fixed 3-tab nav (64px) at bottom, scrolling content between. Default gutter 16px. 4px spacing grid throughout.
+- **Device-detected phone layer.** On reload, UA/client hints + touch + phone viewport may add `data-device="phone"` for safe-area, fixed-nav, keyboard, and PWA standalone polish. This layer is additive to normal viewport responsiveness.
 
 ---
 
@@ -60,21 +62,25 @@ A warm, appetizing design system for **Kya Khana**, a meal-planning PWA for shar
 ## Index / manifest
 
 **Foundations**
+
 - `styles.css` — root entry; `@import`s everything below (consumers link this one file).
 - `tokens/fonts.css` · `colors.css` · `typography.css` · `spacing.css` · `base.css`
 - Specimen cards in `guidelines/*.card.html` (Colors, Type, Spacing, Brand).
 - `assets/logo-mark.svg` — the thali mark.
 
 **Components** (`components/<group>/`) — namespace `window.KyaKhanaDesignSystem_6941ec`
+
 - `core/` — **Button**, **Badge**, **DietBadge**, **Icon**
 - `meal/` — **Countdown**, **ComboOption**, **MealCard**
 - `navigation/` — **AppHeader**, **BottomNav**
 - `inventory/` — **QtyStepper**, **InventoryRow**
 
 **UI Kit**
+
 - `ui_kits/app/` — interactive 3-tab PWA recreation (Dashboard, Inventory, More). See its `README.md`.
 
 **Other**
+
 - `SKILL.md` — portable Agent-Skill wrapper.
 - Generated (do not edit): `_ds_bundle.js`, `_ds_manifest.json`, `_adherence.oxlintrc.json`.
 
